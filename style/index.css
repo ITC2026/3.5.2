@@ -87,3 +87,7 @@ tr:nth-of-type(odd) {
 .prod-desc {
   margin-top: 1rem;
 }
+
+#modal-footer {
+  margin-bottom: 2rem;
+}
