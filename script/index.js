@@ -77,6 +77,7 @@ function getAllProducts() {
         let tdEl = document.createElement("td");
         let btnEl = document.createElement("button");
         btnEl.textContent = "Eliminar";
+        btnEl.setAttribute("class", "btn btn-outline-secondary"); 
         tdEl.appendChild(btnEl);
         tr.appendChild(tdEl);
 
@@ -84,12 +85,14 @@ function getAllProducts() {
         let tdMod = document.createElement("td");
         let btnMod = document.createElement("button");
         btnMod.textContent = "Modificar";
+        btnMod.setAttribute("class", "btn btn-outline-secondary");
         tdMod.appendChild(btnMod);
         tr.appendChild(tdMod);
 
         let tdInfo = document.createElement("td");
         let btnInfo = document.createElement("button");
         btnInfo.textContent = "Info";
+        btnInfo.setAttribute("class", "btn btn-outline-secondary");
         btnInfo.onclick = () => setModalInfo(products[i].id);
 
         btnInfo.setAttribute("data-bs-toggle", "modal");
