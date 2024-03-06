@@ -2,8 +2,6 @@ function getAllProducts() {
   fetch("https://dummyjson.com/products")
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
-
       let { products } = data;
       let tbody = document.getElementById("tbody");
       tbody.innerHTML = `<tr>
@@ -82,7 +80,6 @@ function getAllProducts() {
         tdEl.appendChild(btnEl);
         tr.appendChild(tdEl);
 
-
         // Modificar cell
         let tdMod = document.createElement("td");
         let btnMod = document.createElement("button");
@@ -93,14 +90,49 @@ function getAllProducts() {
         let tdInfo = document.createElement("td");
         let btnInfo = document.createElement("button");
         btnInfo.textContent = "Info";
-        tdInfo.appendChild(btnInfo);
-        tr.appendChild(tdInfo);
-        // products[i].id
-        
+        btnInfo.onclick = () => setModalInfo(products[i].id);
 
+        btnInfo.setAttribute("data-bs-toggle", "modal");
+        btnInfo.setAttribute("data-bs-target", "#staticBackdrop");
+        tdInfo.appendChild(btnInfo);
+
+        tr.appendChild(tdInfo);
+
+        // products[i].id
         tbody.appendChild(tr);
       }
     });
 }
 
+function setModalInfo(id) {
+  fetch(`https://dummyjson.com/products/${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      let product = data;
+      let modalTitle = document.getElementById("modal-title");
+
+      modalTitle.textContent = product.title;
+
+      let modalBody = document.getElementById("modal-body");
+      modalBody.innerHTML = `
+        <div class="modal-body">
+          <img src="${product.thumbnail}" width="100" />
+          <p>${product.description}</p>
+          <p>Brand: ${product.brand}</p>
+          <p>Category: ${product.category}</p>
+          <p>Price: $${product.price}</p>
+          <p>Rating: ${product.rating}</p>
+        </div>
+        `;
+    });
+}
+
+/*
+function hideModal() {
+  document.getElementById("modal-body").setAttribute("aria-hidden", "true");
+  document.getElementById("exampleModal").classList.remove("show");
+  document.getElementById("exampleModal").style.display = "none";
+}
+
+*/
 getAllProducts();
