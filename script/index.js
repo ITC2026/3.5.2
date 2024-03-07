@@ -8,6 +8,11 @@ function getAllProducts() {
     .then((data) => {
       let { products } = data;
       let tbody = document.getElementById("tbody");
+      let btnAdd = document.getElementById("AddProductButton");
+      btnAdd.onclick = () => setModalAdd();
+      btnAdd.setAttribute("data-bs-toggle", "modal");
+      btnAdd.setAttribute("data-bs-target", "#staticBackdrop");
+
       tbody.innerHTML = `<tr>
             <th>Id</th>
             <th></th>
@@ -158,32 +163,32 @@ function setModalModify(id) {
       modalBody.innerHTML = `
         <div class="modal-body">
           <form>
-            <label for="urlInput">Product Name:</label> 
+            <label for="nameInput">Product Name:</label> 
             <input type="text" id="nameInput" name="productName" value="${product.title}">
             <br>
 
-            <label for="urlInput">Product Image:</label>
-            <input type="text" id="nameInput" name="productName" value="${product.thumbnail}">
+            <label for="thumbnailInput">Product Thumbnail:</label>
+            <input type="text" id="thumbnailInput" name="productName" value="${product.thumbnail}">
             <br>
 
-            <label for="urlInput">Product Description:</label>
-            <input type="text" id="nameInput" name="productName" value="${product.description}">
+            <label for="descriptionInput">Product Description:</label>
+            <input type="text" id="descriptionInput" name="productName" value="${product.description}">
             <br>
 
-            <label for="urlInput">Product Brand:</label>
-            <input type="text" id="nameInput" name="productName" value="${product.brand}">
+            <label for="brandInput">Product Brand:</label>
+            <input type="text" id="brandInput" name="productName" value="${product.brand}">
             <br>
 
-            <label for="urlInput">Product Category:</label>
-            <input type="text" id="nameInput" name="productName" value="${product.category}">
+            <label for="categoryInput">Product Category:</label>
+            <input type="text" id="categoryInput" name="productName" value="${product.category}">
             <br>
 
-            <label for="urlInput">Product Price:</label>
-            <input type="text" id="nameInput" name="productName" value="${product.price}">
+            <label for="priceInput">Product Price:</label>
+            <input type="text" id="priceInput" name="productName" value="${product.price}">
             <br>
 
-            <label for="urlInput">Product Rating:</label>
-            <input type="text" id="nameInput" name="productName" value="${product.rating}">
+            <label for="ratingInput">Product Rating:</label>
+            <input type="text" id="ratingInput" name="productName" value="${product.rating}">
             <br>
 
           </form>
@@ -197,6 +202,88 @@ function setModalModify(id) {
           `;
 
     });
+}
+
+function setModalAdd(){
+  //CREATING MODAL
+  let modalTitle = document.getElementById("modal-title");
+  modalTitle.textContent = "Add Product";
+
+  let modalBody = document.getElementById("modal-body");
+  modalBody.innerHTML = `
+    <div class="modal-body">
+      <form>
+        <label for="nameInput">Product Name:</label> 
+        <input type="text" id="nameInput" name="productName" placeholder="Insert name" required>
+        <br>
+
+        <label for="thumbnailInput">Product Thumbnail:</label>
+        <input type="text" id="thumbnailInput" name="productThumbnail" placeholder="Load thumbnail" required>
+        <br>
+
+        <label for="descriptionInput">Product Description:</label>
+        <input type="text" id="descriptionInput" name="productDescription" placeholder="Insert description" required>
+        <br>
+
+        <label for="stockInput">Product Stock:</label>
+        <input type="text" id="stockInput" name="productStock" placeholder="Insert stock" required>
+        <br>
+
+        <label for="discountInput">Product Discount:</label>
+        <input type="text" id="discountInput" name="productDiscount" placeholder="Insert discount percentage" required>
+        <br>
+
+        <label for="brandInput">Product Brand:</label>
+        <input type="text" id="brandInput" name="productBrand" placeholder="Insert brand" required>
+        <br>
+
+        <label for="categoryInput">Product Category:</label>
+        <input type="text" id="categoryInput" name="productCategory" placeholder="Insert category" required>
+        <br>
+
+        <label for="priceInput">Product Price:</label>
+        <input type="number" id="priceInput" name="productPrice" placeholder="Insert price" required>
+        <br>
+
+        <label for="ratingInput">Product Rating:</label>
+        <input type="text" id="ratingInput" name="productRating" placeholder="Insert rating" required>
+        <br>
+
+        <label for="imagesInput">Product Images:</label>
+        <input type="text" id="imagesInput" name="productImages" placeholder="Insert images" required>
+        <br>
+
+      </form>
+    </div>
+  `;
+    let modalFooter = document.getElementById("modal-footer");
+    modalFooter.innerHTML = `
+    <div>
+      <button id = "finishButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Finish</button>
+    </div>
+  `;
+  
+  //POST AFTER CLICKING FINISH BUTTON
+  document.getElementById("finishButton").addEventListener("click", function () {
+    fetch("https://dummyjson.com/products/add", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: document.getElementById("nameInput").value,
+        thumbnail: document.getElementById("thumbnailInput").value,
+        description: document.getElementById("descriptionInput").value,
+        stock: document.getElementById("stockInput").value,
+        discount: document.getElementById("discountInput").value,
+        brand: document.getElementById("brandInput").value,
+        category: document.getElementById("categoryInput").value,
+        price: document.getElementById("priceInput").value,
+        rating: document.getElementById("ratingInput").value,
+        images: document.getElementById("imagesInput").value,
+      }),
+    })
+    .then(res => res.json())
+    .then(console.log);
+  })
 }
 
 /*
