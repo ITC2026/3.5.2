@@ -222,11 +222,11 @@ function setModalAdd(){
         <br>
 
         <label for="stockInput">Product Stock:</label>
-        <input type="text" id="stockInput" name="productStock" placeholder="Insert stock" required>
+        <input type="number" id="stockInput" name="productStock" placeholder="Insert stock" required>
         <br>
 
         <label for="discountInput">Product Discount:</label>
-        <input type="text" id="discountInput" name="productDiscount" placeholder="Insert discount percentage" required>
+        <input type="number" id="discountInput" name="productDiscount" placeholder="Insert discount percentage" required>
         <br>
 
         <label for="brandInput">Product Brand:</label>
@@ -242,7 +242,7 @@ function setModalAdd(){
         <br>
 
         <label for="ratingInput">Product Rating:</label>
-        <input type="text" id="ratingInput" name="productRating" placeholder="Insert rating" required>
+        <input type="number" id="ratingInput" name="productRating" placeholder="Insert rating" required>
         <br>
 
         <label for="imagesInput">Product Images:</label>
@@ -269,7 +269,7 @@ function setModalAdd(){
         thumbnail: document.getElementById("thumbnailInput").value,
         description: document.getElementById("descriptionInput").value,
         stock: document.getElementById("stockInput").value,
-        discount: document.getElementById("discountInput").value,
+        discountPercentage: document.getElementById("discountInput").value, //por alguna razon este no se muestra en la consola
         brand: document.getElementById("brandInput").value,
         category: document.getElementById("categoryInput").value,
         price: document.getElementById("priceInput").value,
