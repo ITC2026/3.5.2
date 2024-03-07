@@ -1,3 +1,7 @@
+// let max_queries = [0, 10] 
+
+// function movingPages(page_num):
+
 function getAllProducts() {
   fetch("https://dummyjson.com/products")
     .then((res) => res.json())
