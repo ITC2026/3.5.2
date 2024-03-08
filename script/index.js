@@ -82,7 +82,7 @@ function getAllProducts() {
         let tdEl = document.createElement("td");
         let btnEl = document.createElement("button");
         btnEl.textContent = "Eliminar";
-        btnEl.setAttribute("class", "btn btn-outline-secondary"); 
+        btnEl.setAttribute("class", "btn btn-outline-secondary");
         tdEl.appendChild(btnEl);
         tr.appendChild(tdEl);
 
@@ -95,7 +95,7 @@ function getAllProducts() {
         btnMod.setAttribute("data-bs-toggle", "modal");
         btnMod.setAttribute("data-bs-target", "#staticBackdrop");
         tdMod.appendChild(btnMod);
-        
+
         tr.appendChild(tdMod);
 
         //Info de cell
@@ -142,7 +142,7 @@ function setModalInfo(id) {
       <div>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
       </div>
-          `  
+          `;
     });
 }
 
@@ -190,24 +190,23 @@ function setModalModify(id) {
           </form>
         </div>
         `;
-        let modalFooter = document.getElementById("modal-footer");
-        modalFooter.innerHTML = `
+      let modalFooter = document.getElementById("modal-footer");
+      modalFooter.innerHTML = `
         <div>
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
         </div>
           `;
-
     });
 }
 
-function setModalAdd(){
+function setModalAdd() {
   //CREATING MODAL
   let modalTitle = document.getElementById("modal-title");
   modalTitle.textContent = "Add Product";
 
   let modalBody = document.getElementById("modal-body");
   modalBody.innerHTML = `
-    <div class="modal-body">
+
       <form>
         <label for="nameInput">Product Name:</label> 
         <input type="text" id="nameInput" name="productName" placeholder="Insert name" required>
@@ -225,8 +224,8 @@ function setModalAdd(){
         <input type="number" id="stockInput" name="productStock" placeholder="Insert stock" required>
         <br>
 
-        <label for="discountInput">Product Discount:</label>
-        <input type="number" id="discountInput" name="productDiscount" placeholder="Insert discount percentage" required>
+        <label for="discInput">Product Discount:</label>
+        <input type="number" id="discInput" name="productDiscount" placeholder="Insert discount percentage" required>
         <br>
 
         <label for="brandInput">Product Brand:</label>
@@ -249,37 +248,27 @@ function setModalAdd(){
         <input type="text" id="imagesInput" name="productImages" placeholder="Insert images" required>
         <br>
 
+        <label for="martinInput">Martin:</label>
+        <input type="text" id="martinInput" name="productMartin" placeholder="Insert martin" required>
+        <br>
+
       </form>
-    </div>
   `;
-    let modalFooter = document.getElementById("modal-footer");
-    modalFooter.innerHTML = `
+  let modalFooter = document.getElementById("modal-footer");
+  modalFooter.innerHTML = `
     <div>
       <button id = "finishButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Finish</button>
     </div>
   `;
-  
+
   //POST AFTER CLICKING FINISH BUTTON
-  document.getElementById("finishButton").addEventListener("click", function () {
-    fetch("https://dummyjson.com/products/add", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: document.getElementById("nameInput").value,
-        thumbnail: document.getElementById("thumbnailInput").value,
-        description: document.getElementById("descriptionInput").value,
-        stock: document.getElementById("stockInput").value,
-        discountPercentage: document.getElementById("discountInput").value, //por alguna razon este no se muestra en la consola
-        brand: document.getElementById("brandInput").value,
-        category: document.getElementById("categoryInput").value,
-        price: document.getElementById("priceInput").value,
-        rating: document.getElementById("ratingInput").value,
-        images: document.getElementById("imagesInput").value,
-      }),
-    })
-    .then(res => res.json())
-    .then(console.log);
-  })
+  document
+    .getElementById("finishButton")
+    .addEventListener("click", function () {
+
+      // TODO: Add validation for the inputs
+      postData();
+    });
 }
 
 /*
@@ -289,5 +278,51 @@ function hideModal() {
   document.getElementById("exampleModal").style.display = "none";
 }
 
+
 */
+
+function postData() {
+  let title = document.getElementById("nameInput").value;
+  let thumbnail = document.getElementById("thumbnailInput").value;
+  let description = document.getElementById("descriptionInput").value;
+  let stock = document.getElementById("stockInput").value;
+  let brand = document.getElementById("brandInput").value;
+  let category = document.getElementById("categoryInput").value;
+  let price = document.getElementById("priceInput").value;
+  let rating = document.getElementById("ratingInput").value;
+  let images = document.getElementById("imagesInput").value;
+  let martin = document.getElementById("martinInput").value;
+
+  let data = {
+      title,
+      thumbnail,
+      description,
+      stock,
+      brand,
+      category,
+      price,
+      rating,
+      images,
+      martin
+  };
+  
+  
+
+  fetch('https://dummyjson.com/products/add', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Success:', data);
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
+}
+
+
 getAllProducts();

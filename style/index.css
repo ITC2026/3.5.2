@@ -32,7 +32,7 @@ a:hover {
   color: blueviolet
 }
 
-section h1,
+section h1, section h3,
 article table{
   display: flex;
   flex-direction: column;
