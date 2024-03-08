@@ -38,7 +38,7 @@
     <section>
       <h1>Consult your camp availability!</h1>
       <article>
-
+        
         <table class="table">
           <tbody id="tbody">
 
@@ -65,6 +65,14 @@
       </div>
     </div>
   </div>
+  <div class="clearfix">
+    <div class="hint-text">Showing <b>10</b> out of <b>30</b> entries</div>
+    <ul class="pagination">
+        <li class="page-item active" id = "page1"><a href="#"  onclick="getAllProducts(10);setActiveItem('1')" class="page-link">1</a></li>
+        <li class="page-item" id = "page2"><a href="#" onclick="getAllProducts(20);setActiveItem('2')" class="page-link">2</a></li>
+        <li class="page-item" id = "page3"><a href="#"  onclick="getAllProducts(30);setActiveItem('3')" class="page-link">3</a></li>
+    </ul>
+</div>
 </body>
 <footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
