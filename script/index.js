@@ -1,5 +1,5 @@
 function changeIdDefault() {
-  let parent = document.getElementsByClassName('pagination')[0]; // Assuming there's only one element with class 'pagination'
+  let parent = document.getElementsByClassName('pagination')[0];
   let children = parent.children;
 
   for (let i = 0; i < children.length; i++) {
@@ -12,7 +12,6 @@ function changeIdDefault() {
   }
 }
 
-
 function setActiveItem(strn) {
   changeIdDefault();
   let elem = document.getElementById('page' + strn);
@@ -20,107 +19,133 @@ function setActiveItem(strn) {
   elem.classList.add("active");
 }
 
-function getAllProducts(q) {
-    // removeAllChildNodes(tbody);
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+function displayProducts(products) {
+  let tbody = document.getElementById("tbody");
+  tbody.innerHTML = `<tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Discount %</th>
+        <th>Rating</th>
+        <th>Stock</th>
+        <th>Brand</th>
+        <th>Category</th>
+        <th>Thumbnail</th>
+        <th><Modificar></th>
+        <th><Eliminar></th>
+      </tr>`;
   
-        let { products } = data;
-        let tbody = document.getElementById("tbody");
-        tbody.innerHTML = `<tr>
-              <th>Id</th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Discount %</th>
-              <th>Rating</th>
-              <th>Stock</th>
-              <th>Brand</th>
-              <th>Category</th>
-              <th>Thumbnail</th>
-              <th><Modificar></th>
-              <th><Eliminar></th>
-            </tr>`;
-        
-        for (let i = q-10; i < q; i++) { 
-          // New table row
-          let tr = document.createElement("tr");
-  
-          // Id cell
-          let tdId = document.createElement("td");
-          tdId.textContent = products[i].id;
-          tr.appendChild(tdId);
+  for (let i = 0; i < products.length; i++) { 
+    let tr = document.createElement("tr");
 
-          // Title cell
-          let tdTitle = document.createElement("td");
-          tdTitle.textContent = products[i].title;
-          tr.appendChild(tdTitle);
+    let tdId = document.createElement("td");
+    tdId.textContent = products[i].id;
+    tr.appendChild(tdId);
 
-          // Desc cell
-          let tdDesc = document.createElement("td");
-          tdDesc.textContent = products[i].description;
-          tr.appendChild(tdDesc);
+    let tdTitle = document.createElement("td");
+    tdTitle.textContent = products[i].title;
+    tr.appendChild(tdTitle);
 
-          // Price cell
-          let tdPrice = document.createElement("td");
-          tdPrice.textContent = "$" + products[i].price;
-          tr.appendChild(tdPrice);
+    let tdDesc = document.createElement("td");
+    tdDesc.textContent = products[i].description;
+    tr.appendChild(tdDesc);
 
-          // Discount cell
-          let tdDisc = document.createElement("td");
-          // Ejemplo de uso de variables de js con texto ``
-          tdDisc.textContent = `${products[i].discountPercentage}%`;
-          tr.appendChild(tdDisc);
+    let tdPrice = document.createElement("td");
+    tdPrice.textContent = "$" + products[i].price;
+    tr.appendChild(tdPrice);
 
-          // Rating cell
-          let tdRating = document.createElement("td");
-          tdRating.textContent = products[i].rating;
-          tr.appendChild(tdRating);
+    let tdDisc = document.createElement("td");
+    tdDisc.textContent = `${products[i].discountPercentage}%`;
+    tr.appendChild(tdDisc);
 
-          // Stock cell
-          let tdStock = document.createElement("td");
-          tdStock.textContent = products[i].stock;
-          tr.appendChild(tdStock);
+    let tdRating = document.createElement("td");
+    tdRating.textContent = products[i].rating;
+    tr.appendChild(tdRating);
 
-          // Brand cell
-          let tdBrand = document.createElement("td");
-          tdBrand.textContent = products[i].brand;
-          tr.appendChild(tdBrand);
+    let tdStock = document.createElement("td");
+    tdStock.textContent = products[i].stock;
+    tr.appendChild(tdStock);
 
-          // Category cell
-          let tdCategory = document.createElement("td");
-          tdCategory.textContent = products[i].category;
-          tr.appendChild(tdCategory);
-  
-          // Thumbnail cell
-          let tdThumb = document.createElement("td");
-          let img = document.createElement("img");
-          img.src = products[i].thumbnail;
-          img.width = 50;
-          tdThumb.appendChild(img);
-          tr.appendChild(tdThumb);
-  
-          // Modificar cell
-          let tdMod = document.createElement("td");
-          let btnMod = document.createElement("button");
-          btnMod.textContent = "Modificar";
-          tdMod.appendChild(btnMod);
-          tr.appendChild(tdMod);
-  
-          // Eliminar cell
-          let tdEl = document.createElement("td");
-          let btnEl = document.createElement("button");
-          btnEl.textContent = "Eliminar";
-          tdEl.appendChild(btnEl);
-          tr.appendChild(tdEl);
-  
-          tbody.appendChild(tr);
-        }
-      });
+    let tdBrand = document.createElement("td");
+    tdBrand.textContent = products[i].brand;
+    tr.appendChild(tdBrand);
+
+    let tdCategory = document.createElement("td");
+    tdCategory.textContent = products[i].category;
+    tr.appendChild(tdCategory);
+
+    let tdThumb = document.createElement("td");
+    let img = document.createElement("img");
+    img.src = products[i].thumbnail;
+    img.width = 50;
+    tdThumb.appendChild(img);
+    tr.appendChild(tdThumb);
+
+    let tdMod = document.createElement("td");
+    let btnMod = document.createElement("button");
+    btnMod.textContent = "Modificar";
+    tdMod.appendChild(btnMod);
+    tr.appendChild(tdMod);
+
+    let tdEl = document.createElement("td");
+    let btnEl = document.createElement("button");
+    btnEl.textContent = "Eliminar";
+    tdEl.appendChild(btnEl);
+    tr.appendChild(tdEl);
+
+    tbody.appendChild(tr);
   }
-  
-  getAllProducts(10);
+  updateEntryCount(products.length);
+}
 
-getAllProducts(10);
+function getAllProducts(q) {
+  fetch("https://dummyjson.com/products")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      displayProducts(data.products.slice(q-10, q));
+    });
+}
+
+function getCategories() {
+  fetch('https://dummyjson.com/products/categories')
+    .then(response => response.json())
+    .then(data => {
+    });
+}
+
+function searchProducts(name, price, category) {
+  var url = 'https://dummyjson.com/products/search?q=' + name + '&price=' + price + '&category=' + category;
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      displayProducts(data.products);
+    });
+}
+
+function addSearchButtonEvent() {
+  var searchButton = document.getElementById('searchButton');
+  if (searchButton) {
+    searchButton.addEventListener('click', function() {
+      var name = prompt("Ingrese el nombre del producto");
+      var price = prompt("Ingrese el precio del producto");
+      var category = prompt("Ingrese la categoría del producto");
+      searchProducts(name, price, category);
+    });
+  }
+}
+
+function updateEntryCount(count) {
+  var entryCountElement = document.getElementById('entryCount');
+  console.log('entryCountElement:', entryCountElement);
+  if (entryCountElement) {
+    entryCountElement.innerText = `Showing ${count} entries`;
+  }
+}
+
+window.onload = function() {
+  getCategories();
+  getAllProducts(10);
+  addSearchButtonEvent();
+};
