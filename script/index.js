@@ -21,6 +21,13 @@ function setActiveItem(strn) {
 
 function displayProducts(products) {
   let tbody = document.getElementById("tbody");
+  
+  if (products.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="12">No se encontró tu búsqueda</td></tr>`;
+    updateEntryCount(0);
+    return;
+  }
+
   tbody.innerHTML = `<tr>
         <th>Id</th>
         <th>Title</th>
@@ -96,6 +103,7 @@ function displayProducts(products) {
 
     tbody.appendChild(tr);
   }
+  
   updateEntryCount(products.length);
 }
 
