@@ -1,7 +1,6 @@
-// let max_queries = [0, 10] 
+// let max_queries = [0, 10]
 
 // function movingPages(page_num):
-
 function getAllProducts() {
   fetch("https://dummyjson.com/products")
     .then((res) => res.json())
@@ -30,58 +29,56 @@ function getAllProducts() {
             <th><Info></th>
           </tr>`;
 
-      // CHANGE: Use array.map instead the traditional <for>
-      for (let i = 0; i < products.length; i++) {
+      products.forEach((product) => {
         // New table row
         let tr = document.createElement("tr");
 
-        // Id cell
         let tdId = document.createElement("td");
-        tdId.textContent = products[i].id;
+        tdId.textContent = product.id;
         tr.appendChild(tdId);
 
         // Thumbnail cell
         let tdThumb = document.createElement("td");
         let img = document.createElement("img");
-        img.src = products[i].thumbnail;
+        img.src = product.thumbnail;
         img.width = 50;
         tdThumb.appendChild(img);
         tr.appendChild(tdThumb);
 
         // Title cell
         let tdTitle = document.createElement("td");
-        tdTitle.textContent = products[i].title;
+        tdTitle.textContent = product.title;
         tr.appendChild(tdTitle);
 
         // Desc cell
         let tdDesc = document.createElement("td");
-        tdDesc.textContent = products[i].description;
+        tdDesc.textContent = product.description;
         tr.appendChild(tdDesc);
 
         // Discount cell
         let tdDisc = document.createElement("td");
-        // Ejemplo de uso de variables de js con texto ``
-        tdDisc.textContent = `${products[i].discountPercentage} %`;
+        // Example of using variables with template literals ``
+        tdDisc.textContent = `${product.discountPercentage} %`;
         tr.appendChild(tdDisc);
 
         // Brand cell
         let tdBrand = document.createElement("td");
-        tdBrand.textContent = products[i].brand;
+        tdBrand.textContent = product.brand;
         tr.appendChild(tdBrand);
 
         // Category cell
         let tdCategory = document.createElement("td");
-        tdCategory.textContent = products[i].category;
+        tdCategory.textContent = product.category;
         tr.appendChild(tdCategory);
 
         // Price cell
         let tdPrice = document.createElement("td");
-        tdPrice.textContent = "$ " + products[i].price;
+        tdPrice.textContent = "$ " + product.price;
         tr.appendChild(tdPrice);
 
         // Rating cell
         let tdRating = document.createElement("td");
-        tdRating.textContent = products[i].rating;
+        tdRating.textContent = product.rating;
         tr.appendChild(tdRating);
 
         // Eliminar cell
@@ -97,7 +94,7 @@ function getAllProducts() {
         let btnMod = document.createElement("button");
         btnMod.textContent = "Modificar";
         btnMod.setAttribute("class", "btn btn-outline-secondary");
-        btnMod.onclick = () => setModalModify(products[i].id);
+        btnMod.onclick = () => setModalModify(product.id);
         btnMod.setAttribute("data-bs-toggle", "modal");
         btnMod.setAttribute("data-bs-target", "#staticBackdrop");
         tdMod.appendChild(btnMod);
@@ -109,7 +106,7 @@ function getAllProducts() {
         let btnInfo = document.createElement("button");
         btnInfo.textContent = "Info";
         btnInfo.setAttribute("class", "btn btn-outline-secondary");
-        btnInfo.onclick = () => setModalInfo(products[i].id);
+        btnInfo.onclick = () => setModalInfo(product.id);
 
         btnInfo.setAttribute("data-bs-toggle", "modal");
         btnInfo.setAttribute("data-bs-target", "#staticBackdrop");
@@ -119,7 +116,7 @@ function getAllProducts() {
 
         // products[i].id
         tbody.appendChild(tr);
-      }
+      });
     });
 }
 
@@ -329,78 +326,88 @@ function setModalAdd() {
   `;
 
   // Populate category select
-  fetch('https://dummyjson.com/products/categories')
-    .then(response => response.json())
-    .then(categories => {
-      const selectElement = document.getElementById('categoryInput');
-      categories.forEach(category => {
-        const option = document.createElement('option');
+  fetch("https://dummyjson.com/products/categories")
+    .then((response) => response.json())
+    .then((categories) => {
+      const selectElement = document.getElementById("categoryInput");
+      categories.forEach((category) => {
+        const option = document.createElement("option");
         option.text = category;
         option.value = category;
         selectElement.add(option);
       });
     })
-    .catch(error => {
-      console.error('Error fetching categories:', error);
+    .catch((error) => {
+      console.error("Error fetching categories:", error);
     });
 
-  fetch('https://dummyjson.com/products')
-  .then(response => response.json())
-  .then(data => {
-    const products = data.products;
-    const brands = [];
+  fetch("https://dummyjson.com/products")
+    .then((response) => response.json())
+    .then((data) => {
+      const products = data.products;
+      const brands = [];
 
-    // Extract all unique brands
-    products.forEach(product => {
-      if (!brands.includes(product.brand)) {
-        brands.push(product.brand);
-      }
-    });
+      // Extract all unique brands
+      products.forEach((product) => {
+        if (!brands.includes(product.brand)) {
+          brands.push(product.brand);
+        }
+      });
 
-    // Populate the select dropdown with brand options
-    const brandInput = document.getElementById('brandInput');
-    brands.forEach(brand => {
-      const option = document.createElement('option');
-      option.value = brand;
-      option.textContent = brand;
-      brandInput.appendChild(option);
+      // Populate the select dropdown with brand options
+      const brandInput = document.getElementById("brandInput");
+      brands.forEach((brand) => {
+        const option = document.createElement("option");
+        option.value = brand;
+        option.textContent = brand;
+        brandInput.appendChild(option);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
     });
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
 
   //VALIDATE FILLED INPUTS
-  const form = document.forms['modalForm'];
-  form.addEventListener('submit', function(event) {
-    const nameInput = document.getElementById('nameInput');
-    const descriptionInput = document.getElementById('descriptionInput');
-    const categoryInput = document.getElementById('categoryInput');
-    const brandInput = document.getElementById('brandInput');
-    const priceInput = document.getElementById('priceInput');
-    const discountInput = document.getElementById('discountInput');
-    const ratingInput = document.getElementById('ratingInput');
-    const stockInput = document.getElementById('stockInput');
-    const thumbnailInput = document.getElementById('thumbnailInput');
-    const imagesInput = document.getElementById('imagesInput');
-    
-    event.preventDefault(); // para que no redireccione cuando se manda
-    form.classList.add('was-validated');
+  const form = document.forms["modalForm"];
+  form.addEventListener(
+    "submit",
+    function (event) {
+      const nameInput = document.getElementById("nameInput");
+      const descriptionInput = document.getElementById("descriptionInput");
+      const categoryInput = document.getElementById("categoryInput");
+      const brandInput = document.getElementById("brandInput");
+      const priceInput = document.getElementById("priceInput");
+      const discountInput = document.getElementById("discountInput");
+      const ratingInput = document.getElementById("ratingInput");
+      const stockInput = document.getElementById("stockInput");
+      const thumbnailInput = document.getElementById("thumbnailInput");
+      const imagesInput = document.getElementById("imagesInput");
 
-    if (!nameInput.checkValidity() || !descriptionInput.checkValidity() 
-    || !brandInput.checkValidity() || !priceInput.checkValidity() 
-    || !discountInput.checkValidity() || !ratingInput.checkValidity() 
-    || !stockInput.checkValidity() || !thumbnailInput.checkValidity() 
-    || !categoryInput.checkValidity() || !imagesInput.checkValidity()) {
-      event.preventDefault(); 
-      event.stopPropagation();
-      return;
-    }
-    
-    // Posts answers
-    postData();
-    
-  }, false);
+      event.preventDefault(); // para que no redireccione cuando se manda
+      form.classList.add("was-validated");
+
+      if (
+        !nameInput.checkValidity() ||
+        !descriptionInput.checkValidity() ||
+        !brandInput.checkValidity() ||
+        !priceInput.checkValidity() ||
+        !discountInput.checkValidity() ||
+        !ratingInput.checkValidity() ||
+        !stockInput.checkValidity() ||
+        !thumbnailInput.checkValidity() ||
+        !categoryInput.checkValidity() ||
+        !imagesInput.checkValidity()
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      // Posts answers
+      postData();
+    },
+    false
+  );
 }
 
 function postData() {
@@ -415,41 +422,40 @@ function postData() {
   let images = document.getElementById("imagesInput").value;
 
   let data = {
-      title,
-      thumbnail,
-      description,
-      stock,
-      brand,
-      category,
-      price,
-      rating,
-      images,
+    title,
+    thumbnail,
+    description,
+    stock,
+    brand,
+    category,
+    price,
+    rating,
+    images,
   };
 
-  fetch('https://dummyjson.com/products/add', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+  fetch("https://dummyjson.com/products/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(data => {
-      console.log('Success:', data);
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
       //getAllProducts(); //si se fuera a actualizar de verdad
       showSuccessAlert();
-      $('#staticBackdrop').modal('hide'); // quita el form
-  })
-  .catch((error) => {
-      console.error('Error:', error);
-  });
+      $("#staticBackdrop").modal("hide"); // quita el form
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 function showSuccessAlert() {
-  
-  const alertElement = document.createElement('div');
-  alertElement.classList.add('alert', 'alert-success');
-  alertElement.setAttribute('role', 'alert');
+  const alertElement = document.createElement("div");
+  alertElement.classList.add("alert", "alert-success");
+  alertElement.setAttribute("role", "alert");
   alertElement.textContent = "Operation was successful!";
 
   document.body.appendChild(alertElement);
@@ -457,15 +463,13 @@ function showSuccessAlert() {
   // Quita la alerta
   setTimeout(() => {
     alertElement.remove();
-  }, 5000); 
+  }, 5000);
 }
-
 
 /*function hideModal() {
   document.getElementById("modal-body").setAttribute("aria-hidden", "true");
   document.getElementById("exampleModal").classList.remove("show");
   document.getElementById("exampleModal").style.display = "none";
 }*/
-
 
 getAllProducts();
