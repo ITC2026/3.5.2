@@ -12,12 +12,34 @@ function changeIdDefault() {
   }
 }
 
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
 
 function setActiveItem(strn) {
   changeIdDefault();
   let elem = document.getElementById('page' + strn);
   console.log(elem.textContent)
   elem.classList.add("active");
+}
+
+function displayImages(images, container, currentIndex) {
+  let tdImages = document.createElement("div");
+  let image = document.createElement("img");
+
+  if (currentIndex < images.length - 1) {
+    currentIndex++;
+    image.src = images[currentIndex];
+    image.width = 50;
+    tdImages.appendChild(image);
+  } else {
+    return;
+  }
+  removeAllChildNodes(container);
+  container.appendChild(tdImages);
+  return currentIndex;
 }
 
 function getAllProducts(q) {
@@ -106,30 +128,45 @@ function getAllProducts(q) {
         img.width = 50;
         tdThumb.appendChild(img);
         tr.appendChild(tdThumb);
-
-        //Images cell
-
-        //Previous button
-        /*let tdPrev = document.createElement("td");
+      
+        // Images cell
+        
+        // Previous button
+        let currentIndex = -1;
+        let imgs = document.createElement("td");
+        imgs.className = "imagesoptions";
         let prev = document.createElement("button");
         prev.textContent = "<";
-        tdPrev.appendChild(prev);
-        tr.appendChild(tdPrev);*/
+        prev.onclick = function() {
+            currentIndex--;
+            if (currentIndex >= 0) {
+                displayImages(products[i].images, tdImage, currentIndex);
+            } else {
+                currentIndex = 0;
+            }
+        };
+        imgs.appendChild(prev);
+        tr.appendChild(imgs);
+        
+        
+        let tdImage = document.createElement("div");
+        currentIndex = displayImages(products[i].images, tdImage, currentIndex); // Assigning currentIndex
+        imgs.appendChild(tdImage);
 
-        //Image shown
-        let tdImage = document.createElement("td");
-        let image = document.createElement("img");
-        image.src = products[i].images[0]; // Puedes cambiar el index del array images.
-        image.width = 50;
-        tdImage.appendChild(image);
-        tr.appendChild(tdImage);
+        
 
-        //Next button
-        /*let tdNext = document.createElement("td");
+        // Next button
         let next = document.createElement("button");
         next.textContent = ">";
-        tdNext.appendChild(next);
-        tr.appendChild(tdNext);*/
+        next.onclick = function() {
+            currentIndex++;
+            if (currentIndex < products[i].images.length) {
+                displayImages(products[i].images, tdImage, currentIndex);
+            } else {
+                currentIndex = products[i].images.length - 1;
+            }
+        };
+        imgs.appendChild(next);
 
         // Modificar cell
         let tdMod = document.createElement("td");

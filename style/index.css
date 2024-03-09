@@ -21,6 +21,31 @@ table {
 th {
   text-align: center;
 }
+
+.imagesoptions {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  width: 10rem;
+  height: 10rem;
+  padding: 0;
+  margin: 0;
+}
+.imagesoptions div {
+  transform: scaleY(.9);
+  text-align: center;
+  padding-left: 2%; 
+  padding-right: 2%; 
+
+}
+.imagesoptions button {
+  border-radius: 2px;
+  height: 1rem;
+  align-content: center;
+  text-align: center;
+  padding-bottom: 20px;
+}
 .table-wrapper {
   background: #fff;
   padding: 20px 25px;
@@ -235,4 +260,10 @@ table.table .avatar {
 }	
 .modal form label {
   font-weight: normal;
+}
+
+#tbody tr {
+  height: 4rem;
+  padding: 0rem;
+  width: 30rem;
 }
