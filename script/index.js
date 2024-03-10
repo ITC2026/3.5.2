@@ -3,6 +3,13 @@ function getAllProducts() {
     .then((res) => res.json())
     .then((data) => {
       let { products } = data;
+
+      if (products.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="12">No se encontró tu búsqueda</td></tr>`;
+        updateEntryCount(0);
+        return;
+      }
+
       let tbody = document.getElementById("tbody");
       let btnAdd = document.getElementById("AddProductButton");
       let btnSearchModal = document.getElementById("SearchProductButton");
@@ -31,6 +38,8 @@ function getAllProducts() {
             <th><Eliminar></th>
             <th><Info></th>
           </tr>`;
+
+      updateEntryCount(products.length);
 
       // CHANGE: Use array.map instead the traditional <for>
       for (let i = 0; i < products.length; i++) {
@@ -125,6 +134,13 @@ function getAllProducts() {
     });
 }
 
+function updateEntryCount(count) {
+  var entryCountElement = document.getElementById('entryCount');
+  if (entryCountElement) {
+    entryCountElement.innerText = `Showing ${count} entries`;
+  }
+}
+
 function populateCategories() {
   fetch('https://dummyjson.com/products/categories')
     .then(response => response.json())
@@ -167,6 +183,15 @@ function populateBrand() {
   })
   .catch(error => {
     console.error('Error fetching data:', error);
+  });
+}
+
+function searchPetition(name, price, category) {
+  const url = 'https://dummyjson.com/products/search?q=' + name + '&price=' + price + '&category=' + category;
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      displayProducts(data.products);
   });
 }
 
@@ -226,8 +251,12 @@ function setModalSearch() {
 
   populateCategories();
 
+  const nameImput = document.getElementById("nameInput");
+  const priceImput = document.getElementById("priceInput");
+  const categoryImput = document.getElementById("categoryInput");
+
   let searchBtn = document.getElementById("searchBtn");
-  searchBtn.onclick = () => setModalAdd();
+  searchBtn.onclick = () => searchPetition(nameImput, priceImput, categoryImput);
 }
 
 function setModalInfo(id) {
