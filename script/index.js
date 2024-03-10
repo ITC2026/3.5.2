@@ -125,6 +125,23 @@ function getAllProducts() {
     });
 }
 
+function populateCategories() {
+  fetch('https://dummyjson.com/products/categories')
+    .then(response => response.json())
+    .then(categories => {
+      const selectElement = document.getElementById('categoryInput');
+      categories.forEach(category => {
+        const option = document.createElement('option');
+        option.text = category;
+        option.value = category;
+        selectElement.add(option);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching categories:', error);
+    });
+}
+
 function setModalSearch() {
   let modalTitle = document.getElementById("modal-title");
   modalTitle.textContent = "Search Product";
@@ -386,20 +403,7 @@ function setModalAdd() {
   `;
 
   // Populate category select
-  fetch('https://dummyjson.com/products/categories')
-    .then(response => response.json())
-    .then(categories => {
-      const selectElement = document.getElementById('categoryInput');
-      categories.forEach(category => {
-        const option = document.createElement('option');
-        option.text = category;
-        option.value = category;
-        selectElement.add(option);
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching categories:', error);
-    });
+  populateCategories();
 
   fetch('https://dummyjson.com/products')
   .then(response => response.json())
