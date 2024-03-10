@@ -5,7 +5,7 @@ function getAllProducts() {
       let { products } = data;
       let tbody = document.getElementById("tbody");
       let btnAdd = document.getElementById("AddProductButton");
-      let btnSearch = document.getElementById("SearchProductButton");
+      let btnSearchModal = document.getElementById("SearchProductButton");
 
       /*For add product button*/
       btnAdd.onclick = () => setModalAdd();
@@ -13,9 +13,9 @@ function getAllProducts() {
       btnAdd.setAttribute("data-bs-target", "#staticBackdrop");
 
       /*For search product button*/
-      btnSearch.onclick = () => setModalSearch();
-      btnSearch.setAttribute("data-bs-toggle", "modal");
-      btnSearch.setAttribute("data-bs-target", "#staticBackdrop");
+      btnSearchModal.onclick = () => setModalSearch();
+      btnSearchModal.setAttribute("data-bs-toggle", "modal");
+      btnSearchModal.setAttribute("data-bs-target", "#staticBackdrop");
 
       tbody.innerHTML = `<tr>
             <th>Id</th>
@@ -142,6 +142,34 @@ function populateCategories() {
     });
 }
 
+function populateBrand() {
+  fetch('https://dummyjson.com/products')
+  .then(response => response.json())
+  .then(data => {
+    const products = data.products;
+    const brands = [];
+
+    // Extract all unique brands
+    products.forEach(product => {
+      if (!brands.includes(product.brand)) {
+        brands.push(product.brand);
+      }
+    });
+
+    // Populate the select dropdown with brand options
+    const brandInput = document.getElementById('brandInput');
+    brands.forEach(brand => {
+      const option = document.createElement('option');
+      option.value = brand;
+      option.textContent = brand;
+      brandInput.appendChild(option);
+    });
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+}
+
 function setModalSearch() {
   let modalTitle = document.getElementById("modal-title");
   modalTitle.textContent = "Search Product";
@@ -195,6 +223,11 @@ function setModalSearch() {
     <button id="searchBtn" type="submit" class="btn btn-primary">Search</button>
   </div>
   `;
+
+  populateCategories();
+
+  let searchBtn = document.getElementById("searchBtn");
+  searchBtn.onclick = () => setModalAdd();
 }
 
 function setModalInfo(id) {
@@ -405,31 +438,8 @@ function setModalAdd() {
   // Populate category select
   populateCategories();
 
-  fetch('https://dummyjson.com/products')
-  .then(response => response.json())
-  .then(data => {
-    const products = data.products;
-    const brands = [];
-
-    // Extract all unique brands
-    products.forEach(product => {
-      if (!brands.includes(product.brand)) {
-        brands.push(product.brand);
-      }
-    });
-
-    // Populate the select dropdown with brand options
-    const brandInput = document.getElementById('brandInput');
-    brands.forEach(brand => {
-      const option = document.createElement('option');
-      option.value = brand;
-      option.textContent = brand;
-      brandInput.appendChild(option);
-    });
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
+  // Populate brand select
+  populateBrand();
 
   //VALIDATE FILLED INPUTS
   const form = document.forms['modalForm'];
