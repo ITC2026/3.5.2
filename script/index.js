@@ -1,16 +1,16 @@
-function getAllProducts() {
-  fetch("https://dummyjson.com/products")
+function getAllProducts(url) {
+  fetch(url)
     .then((res) => res.json())
     .then((data) => {
       let { products } = data;
+      let tbody = document.getElementById("tbody");
 
       if (products.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="12">No se encontró tu búsqueda</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="12">Your search was not found</td></tr>`;
         updateEntryCount(0);
         return;
       }
 
-      let tbody = document.getElementById("tbody");
       let btnAdd = document.getElementById("AddProductButton");
       let btnSearchModal = document.getElementById("SearchProductButton");
 
@@ -186,15 +186,6 @@ function populateBrand() {
   });
 }
 
-function searchPetition(name, price, category) {
-  const url = 'https://dummyjson.com/products/search?q=' + name + '&price=' + price + '&category=' + category;
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      displayProducts(data.products);
-  });
-}
-
 function setModalSearch() {
   let modalTitle = document.getElementById("modal-title");
   modalTitle.textContent = "Search Product";
@@ -251,12 +242,12 @@ function setModalSearch() {
 
   populateCategories();
 
-  const nameImput = document.getElementById("nameInput");
-  const priceImput = document.getElementById("priceInput");
-  const categoryImput = document.getElementById("categoryInput");
+  const nameInput = document.getElementById("nameInput");
+  const priceInput = document.getElementById("priceInput");
+  const categoryInput = document.getElementById("categoryInput");
 
   let searchBtn = document.getElementById("searchBtn");
-  searchBtn.onclick = () => searchPetition(nameImput, priceImput, categoryImput);
+  searchBtn.onclick = () => getAllProducts('https://dummyjson.com/products/search?q=' + nameInput + '&price=' + priceInput + '&category=' + categoryInput);
 }
 
 function setModalInfo(id) {
@@ -568,4 +559,4 @@ function showSuccessAlert() {
 }*/
 
 
-getAllProducts();
+getAllProducts("https://dummyjson.com/products");
