@@ -134,6 +134,110 @@ function getAllProducts(url) {
     });
 }
 
+function generateTable(products) {
+  let tbody = document.getElementById("tbody");
+  tbody.innerHTML = `<tr>
+  <th>Id</th>
+  <th></th>
+  <th>Title</th>
+  <th>Description</th>
+  <th>Discount %</th>
+  <th>Brand</th>
+  <th>Category</th>
+  <th>Price</th>
+  <th>Rating</th>
+  <th><Modificar></th>
+  <th><Eliminar></th>
+  <th><Info></th>
+</tr>`; 
+
+  for (let i = 0; i < products.length; i++) {
+    // New table row
+    let tr = document.createElement("tr");
+
+    // Id cell
+    let tdId = document.createElement("td");
+    tdId.textContent = products[i].id;
+    tr.appendChild(tdId);
+
+    // Thumbnail cell
+    let tdThumb = document.createElement("td");
+    let img = document.createElement("img");
+    img.src = products[i].thumbnail;
+    img.width = 50;
+    tdThumb.appendChild(img);
+    tr.appendChild(tdThumb);
+
+    // Title cell
+    let tdTitle = document.createElement("td");
+    tdTitle.textContent = products[i].title;
+    tr.appendChild(tdTitle);
+
+    // Desc cell
+    let tdDesc = document.createElement("td");
+    tdDesc.textContent = products[i].description;
+    tr.appendChild(tdDesc);
+
+    // Discount cell
+    let tdDisc = document.createElement("td");
+    tdDisc.textContent = `${products[i].discountPercentage} %`;
+    tr.appendChild(tdDisc);
+
+    // Brand cell
+    let tdBrand = document.createElement("td");
+    tdBrand.textContent = products[i].brand;
+    tr.appendChild(tdBrand);
+
+    // Category cell
+    let tdCategory = document.createElement("td");
+    tdCategory.textContent = products[i].category;
+    tr.appendChild(tdCategory);
+
+    // Price cell
+    let tdPrice = document.createElement("td");
+    tdPrice.textContent = "$ " + products[i].price;
+    tr.appendChild(tdPrice);
+
+    // Rating cell
+    let tdRating = document.createElement("td");
+    tdRating.textContent = products[i].rating;
+    tr.appendChild(tdRating);
+
+    // Eliminar cell
+    let tdEl = document.createElement("td");
+    let btnEl = document.createElement("button");
+    btnEl.textContent = "Eliminar";
+    btnEl.setAttribute("class", "btn btn-outline-secondary");
+    tdEl.appendChild(btnEl);
+    tr.appendChild(tdEl);
+
+    // Modificar cell
+    let tdMod = document.createElement("td");
+    let btnMod = document.createElement("button");
+    btnMod.textContent = "Modificar";
+    btnMod.setAttribute("class", "btn btn-outline-secondary");
+    btnMod.onclick = () => setModalModify(products[i].id);
+    btnMod.setAttribute("data-bs-toggle", "modal");
+    btnMod.setAttribute("data-bs-target", "#staticBackdrop");
+    tdMod.appendChild(btnMod);
+    tr.appendChild(tdMod);
+
+    // Info de cell
+    let tdInfo = document.createElement("td");
+    let btnInfo = document.createElement("button");
+    btnInfo.textContent = "Info";
+    btnInfo.setAttribute("class", "btn btn-outline-secondary");
+    btnInfo.onclick = () => setModalInfo(products[i].id);
+    btnInfo.setAttribute("data-bs-toggle", "modal");
+    btnInfo.setAttribute("data-bs-target", "#staticBackdrop");
+    tdInfo.appendChild(btnInfo);
+    tr.appendChild(tdInfo);
+
+    tbody.appendChild(tr);
+  }
+}
+
+
 function updateEntryCount(count) {
   var entryCountElement = document.getElementById('entryCount');
   if (entryCountElement) {
@@ -247,7 +351,23 @@ function setModalSearch() {
   const categoryInput = document.getElementById("categoryInput");
 
   let searchBtn = document.getElementById("searchBtn");
-  searchBtn.onclick = () => getAllProducts('https://dummyjson.com/products/search?q=' + nameInput + '&price=' + priceInput + '&category=' + categoryInput);
+  searchBtn.onclick = () => {
+    let nameInput = document.getElementById("nameInput").value;
+    let priceInput = document.getElementById("priceInput").value;
+    let categoryInput = document.getElementById("categoryInput").value;
+
+    searchProducts(nameInput, priceInput, categoryInput);
+  }
+}
+
+function searchProducts(name, price, category) {
+  fetch(`https://dummyjson.com/products/search?q=${name}&price=${price}&category=${category}`)
+    .then(response => response.json())
+    .then(data => {
+      let { products } = data;
+      generateTable(products); // Llamada a la función generateTable
+      updateEntryCount(products.length); // Actualiza el recuento de entradas
+    });
 }
 
 function setModalInfo(id) {
