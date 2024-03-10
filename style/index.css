@@ -32,12 +32,18 @@ a:hover {
   color: blueviolet
 }
 
-section,
-article {
+section h1, section h3,
+article table{
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 40px;
+}
+
+article div {
+  display:flex;
+  justify-content: end;
+  margin-right: 1%;
 }
 
 
