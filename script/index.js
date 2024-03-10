@@ -123,6 +123,8 @@ function getCategories() {
     });
 }
 
+// Funcionalidad de Búsqueda. Trabajado por Daniel Lujan y Ramón Gómez
+
 function searchProducts(name, price, category) {
   var url = 'https://dummyjson.com/products/search?q=' + name + '&price=' + price + '&category=' + category;
   fetch(url)
