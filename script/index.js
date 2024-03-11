@@ -11,6 +11,14 @@ function getAllProducts(url) {
         return;
       }
 
+      if (name && maxPrice && category) {
+        products = products.filter(product => 
+          product.title.toLowerCase() === name.toLowerCase() && 
+          product.price <= maxPrice && 
+          product.category.toLowerCase() === category.toLowerCase()
+        );
+      }
+
       let btnAdd = document.getElementById("AddProductButton");
       let btnSearchModal = document.getElementById("SearchProductButton");
 
@@ -256,9 +264,9 @@ function setModalSearch() {
   }
 }
 
-function searchProducts(name, price, category) {
-  let url = `https://dummyjson.com/products/search?q=${name}&price=${price}&category=${category}`;
-  getAllProducts(url); 
+function searchProducts(name, maxPrice, category) {
+  let url = `https://dummyjson.com/products/search?q=${name}&price=${maxPrice}&category=${category}`;
+  getAllProducts(url, name, maxPrice, category);
 }
 
 function setModalInfo(id) {
