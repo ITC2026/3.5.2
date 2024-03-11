@@ -117,35 +117,6 @@ function getAllProducts(q) {
     });
 }
 
-function setModalInfo(id) {
-  fetch(`https://dummyjson.com/products/${id}`)
-    .then((res) => res.json())
-    .then((data) => {
-      let product = data;
-      let modalTitle = document.getElementById("modal-title");
-
-      modalTitle.textContent = product.title;
-
-      let modalBody = document.getElementById("modal-body");
-      modalBody.innerHTML = `
-        <div class="modal-body">
-          <img src="${product.thumbnail}" width="100" />
-          <p>${product.description}</p>
-          <p>Brand: ${product.brand}</p>
-          <p>Category: ${product.category}</p>
-          <p>Price: $${product.price}</p>
-          <p>Rating: ${product.rating}</p>
-        </div>
-        `;
-      let modalFooter = document.getElementById("modal-footer");
-      modalFooter.innerHTML = `
-      <div>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
-      </div>
-          `;
-    });
-}
-
 function setModalModify(id) {
   fetch(`https://dummyjson.com/products/${id}`)
     .then((res) => res.json())
