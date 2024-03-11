@@ -1,4 +1,4 @@
-function getAllProducts() {
+function getAllProducts(q) {
   fetch("https://dummyjson.com/products")
     .then((res) => res.json())
     .then((data) => {
@@ -11,23 +11,24 @@ function getAllProducts() {
       btnAdd.setAttribute("data-bs-toggle", "modal");
       btnAdd.setAttribute("data-bs-target", "#staticBackdrop");
 
-      tbody.innerHTML = `<tr>
+      tbody.innerHTML = `<tr> 
             <th>Id</th>
-            <th></th>
             <th>Title</th>
             <th>Description</th>
+            <th>Price</th>
             <th>Discount %</th>
+            <th>Rating</th>
+            <th>Stock</th>
             <th>Brand</th>
             <th>Category</th>
-            <th>Price</th>
-            <th>Rating</th>
+            <th>Thumbnail</th>
+            <th>Images</th>
             <th><Modificar></th>
-            <th><Eliminar></th>
-            <th><Info></th>
           </tr>`;
+      let imageIndex = 0;
 
       // CHANGE: Use array.map instead the traditional <for>
-      for (let i = 0; i < products.length; i++) {
+      for (let i = q-10; i < q; i++) { 
         // New table row
         let tr = document.createElement("tr");
 
@@ -35,14 +36,6 @@ function getAllProducts() {
         let tdId = document.createElement("td");
         tdId.textContent = products[i].id;
         tr.appendChild(tdId);
-
-        // Thumbnail cell
-        let tdThumb = document.createElement("td");
-        let img = document.createElement("img");
-        img.src = products[i].thumbnail;
-        img.width = 50;
-        tdThumb.appendChild(img);
-        tr.appendChild(tdThumb);
 
         // Title cell
         let tdTitle = document.createElement("td");
@@ -54,11 +47,26 @@ function getAllProducts() {
         tdDesc.textContent = products[i].description;
         tr.appendChild(tdDesc);
 
+        // Price cell
+        let tdPrice = document.createElement("td");
+        tdPrice.textContent = "$" + products[i].price;
+        tr.appendChild(tdPrice);
+
         // Discount cell
         let tdDisc = document.createElement("td");
         // Ejemplo de uso de variables de js con texto ``
-        tdDisc.textContent = `${products[i].discountPercentage} %`;
+        tdDisc.textContent = `${products[i].discountPercentage}%`;
         tr.appendChild(tdDisc);
+
+        // Rating cell
+        let tdRating = document.createElement("td");
+        tdRating.textContent = products[i].rating;
+        tr.appendChild(tdRating);
+
+        // Stock cell
+        let tdStock = document.createElement("td");
+        tdStock.textContent = products[i].stock;
+        tr.appendChild(tdStock);
 
         // Brand cell
         let tdBrand = document.createElement("td");
@@ -70,23 +78,51 @@ function getAllProducts() {
         tdCategory.textContent = products[i].category;
         tr.appendChild(tdCategory);
 
-        // Price cell
-        let tdPrice = document.createElement("td");
-        tdPrice.textContent = "$ " + products[i].price;
-        tr.appendChild(tdPrice);
+        // Thumbnail cell
+        let tdThumb = document.createElement("td");
+        let img = document.createElement("img");
+        img.src = products[i].thumbnail;
+        img.width = 50;
+        tdThumb.appendChild(img);
+        tr.appendChild(tdThumb);
+      
+        // Images cell
+        
+        // Previous button
+        let currentIndex = -1;
+        let imgs = document.createElement("td");
+        imgs.className = "imagesoptions";
+        let prev = document.createElement("button");
+        prev.textContent = "<";
+        prev.onclick = function() {
+            currentIndex--;
+            if (currentIndex >= 0) {
+                displayImages(products[i].images, tdImage, currentIndex);
+            } else {
+                currentIndex = 0;
+            }
+        };
+        imgs.appendChild(prev);
+        tr.appendChild(imgs);
+        
+        
+        let tdImage = document.createElement("div");
+        currentIndex = displayImages(products[i].images, tdImage, currentIndex); // Assigning currentIndex
+        imgs.appendChild(tdImage);
 
-        // Rating cell
-        let tdRating = document.createElement("td");
-        tdRating.textContent = products[i].rating;
-        tr.appendChild(tdRating);
+        // Next button
+        let next = document.createElement("button");
+        next.textContent = ">";
+        next.onclick = function() {
+            currentIndex++;
+            if (currentIndex < products[i].images.length) {
+                displayImages(products[i].images, tdImage, currentIndex);
+            } else {
+                currentIndex = products[i].images.length - 1;
+            }
+        };
+        imgs.appendChild(next);
 
-        // Eliminar cell
-        let tdEl = document.createElement("td");
-        let btnEl = document.createElement("button");
-        btnEl.textContent = "Eliminar";
-        btnEl.setAttribute("class", "btn btn-outline-secondary");
-        tdEl.appendChild(btnEl);
-        tr.appendChild(tdEl);
 
         // Modificar cell
         let tdMod = document.createElement("td");
@@ -463,5 +499,48 @@ function showSuccessAlert() {
   document.getElementById("exampleModal").style.display = "none";
 }*/
 
+function changeIdDefault() {
+  let parent = document.getElementsByClassName('pagination')[0]; // Assuming there's only one element with class 'pagination'
+  let children = parent.children;
 
-getAllProducts();
+  for (let i = 0; i < children.length; i++) {
+    if (children[i].classList.contains('disable')) {
+      children[i].classList.remove('disable');
+    }
+    if (children[i].classList.contains('active')) {
+      children[i].classList.remove('active');
+    }
+  }
+}
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+
+function setActiveItem(strn) {
+  changeIdDefault();
+  let elem = document.getElementById('page' + strn);
+  console.log(elem.textContent)
+  elem.classList.add("active");
+}
+
+function displayImages(images, container, currentIndex) {
+  let tdImages = document.createElement("div");
+  let image = document.createElement("img");
+
+  if (currentIndex < images.length - 1) {
+    currentIndex++;
+    image.src = images[currentIndex];
+    image.width = 50;
+    tdImages.appendChild(image);
+  } else {
+    return;
+  }
+  removeAllChildNodes(container);
+  container.appendChild(tdImages);
+  return currentIndex;
+}
+
+getAllProducts(10);
