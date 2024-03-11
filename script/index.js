@@ -1,4 +1,7 @@
-function getAllProducts(q) {
+let currentPage = 0;
+const productsPerPage = 10;
+
+function getAllProducts(page) {
   fetch("https://dummyjson.com/products")
     .then((res) => res.json())
     .then((data) => {
@@ -25,9 +28,18 @@ function getAllProducts(q) {
             <th>Images</th>
             <th><Modificar></th>
           </tr>`;
-      let imageIndex = 0;
 
-      products.forEach((product) => {
+
+      const endIndex = (currentPage + 1) * productsPerPage;
+      const startIndex = endIndex - 10;
+
+      console.log(
+        `page: ${page}, startIndex: ${startIndex}, endIndex: ${endIndex}, productsPerPage: ${productsPerPage}`
+      );
+
+      const productsForPage = products.slice(startIndex, endIndex);
+
+      productsForPage.forEach((product) => {
         // New table row
         let tr = document.createElement("tr");
 
@@ -52,7 +64,6 @@ function getAllProducts(q) {
         let tdDesc = document.createElement("td");
         tdDesc.textContent = product.description;
         tr.appendChild(tdDesc);
-
 
         // Discount cell
         let tdDisc = document.createElement("td");
@@ -84,7 +95,6 @@ function getAllProducts(q) {
         let tdRating = document.createElement("td");
         tdRating.textContent = product.rating;
         tr.appendChild(tdRating);
-
 
         // Modificar cell
         let tdMod = document.createElement("td");
@@ -374,7 +384,7 @@ function setModalAdd() {
       // Posts answers
       postData();
     },
-    false,
+    false
   );
 }
 
@@ -434,36 +444,31 @@ function showSuccessAlert() {
   }, 5000);
 }
 
-/*function hideModal() {
-  document.getElementById("modal-body").setAttribute("aria-hidden", "true");
-  document.getElementById("exampleModal").classList.remove("show");
-  document.getElementById("exampleModal").style.display = "none";
-}*/
-
 function changeIdDefault() {
-  let parent = document.getElementsByClassName('pagination')[0]; // Assuming there's only one element with class 'pagination'
+  let parent = document.getElementsByClassName("pagination")[0]; // Assuming there's only one element with class 'pagination'
   let children = parent.children;
 
   for (let i = 0; i < children.length; i++) {
-    if (children[i].classList.contains('disable')) {
-      children[i].classList.remove('disable');
+    if (children[i].classList.contains("disable")) {
+      children[i].classList.remove("disable");
     }
-    if (children[i].classList.contains('active')) {
-      children[i].classList.remove('active');
+    if (children[i].classList.contains("active")) {
+      children[i].classList.remove("active");
     }
   }
 }
 
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
+    parent.removeChild(parent.firstChild);
   }
 }
 
 function setActiveItem(strn) {
   changeIdDefault();
-  let elem = document.getElementById('page' + strn);
-  console.log(elem.textContent)
+  let elem = document.getElementById("page" + strn);
+  console.log("strn: ", strn);
+  currentPage = strn - 1;
   elem.classList.add("active");
 }
 
@@ -484,4 +489,4 @@ function displayImages(images, container, currentIndex) {
   return currentIndex;
 }
 
-getAllProducts(10);
+getAllProducts(currentPage);
