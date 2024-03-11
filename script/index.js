@@ -26,10 +26,8 @@ function getAllProducts(page) {
             <th>Price</th>
             <th>Rating</th>
             <th>Images</th>
-            <th><Info></th>
             <th><Modificar></th>
-            <th><Eliminar></th>
-            <th><Agregar></th>
+            <th><Info></th>
           </tr>`;
 
       const endIndex = (currentPage + 1) * productsPerPage;
