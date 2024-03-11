@@ -46,4 +46,6 @@ _testmain.go
 #*.png
 #*.jpeg
 *.psd
+
+# Logs
 .prettierrc

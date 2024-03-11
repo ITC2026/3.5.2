@@ -16,19 +16,21 @@ function getAllProducts(page) {
 
       tbody.innerHTML = `<tr> 
             <th>Id</th>
+            <th>Thumbnail</th>
             <th>Title</th>
             <th>Description</th>
-            <th>Price</th>
             <th>Discount %</th>
-            <th>Rating</th>
             <th>Stock</th>
             <th>Brand</th>
             <th>Category</th>
-            <th>Thumbnail</th>
+            <th>Price</th>
+            <th>Rating</th>
             <th>Images</th>
+            <th><Info></th>
             <th><Modificar></th>
+            <th><Eliminar></th>
+            <th><Agregar></th>
           </tr>`;
-
 
       const endIndex = (currentPage + 1) * productsPerPage;
       const startIndex = endIndex - 10;
@@ -95,6 +97,25 @@ function getAllProducts(page) {
         let tdRating = document.createElement("td");
         tdRating.textContent = product.rating;
         tr.appendChild(tdRating);
+
+        // Images cell
+        let tdImages = document.createElement("td");
+        let imgButton = document.createElement("button");
+        imgButton.textContent = "Show";
+        imgButton.setAttribute("class", "btn btn-outline-secondary");
+        imgButton.onclick = () => {
+          let currentIndex = -1;
+          currentIndex = displayImages(product.images, tdImages, currentIndex);
+          imgButton.onclick = () => {
+            currentIndex = displayImages(
+              product.images,
+              tdImages,
+              currentIndex
+            );
+          };
+        };
+        tdImages.appendChild(imgButton);
+        tr.appendChild(tdImages);
 
         // Modificar cell
         let tdMod = document.createElement("td");
