@@ -1,76 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="This is the description of the page that is used by SEO to optimize search 
+        results and to provide a summary of the site."
+    />
+    <meta name="author" content="Author's name" />
+    <title>
+      Actividad 3.5.3 - Construcción de Software y Toma de Decisiones
+    </title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="This is the description of the page that is used by SEO to optimize search 
-        results and to provide a summary of the site.">
-  <meta name="author" content="Author's name">
-  <title>Actividad 3.5.3 - Construcción de Software y Toma de Decisiones</title>
+    <link
+      rel="icon"
+      href="/images/favicon.ico"
+      type="image/ico"
+      sizes="16x16"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style/index.css" />
+  </head>
 
-  <link rel="icon" href="/images/favicon.ico" type="image/ico" sizes="16x16">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="./style/index.css">
+  <body>
+    <main>
+      <section>
+        <h3>Actividad 3.5.3</h3>
+        <h3>Construcción de Software y Toma de Decisiones</h3>
 
-</head>
+        <a
+          class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+          href="./pages/infoEquipo.html"
+          >Equipo de trabajo</a
+        >
+        <article>
+          <div>
+            <button class="btn btn-primary" id="AddProductButton">
+              Add product
+            </button>
+          </div>
+          <table class="table">
+            <tbody id="tbody"></tbody>
+          </table>
+        </article>
+      </section>
+    </main>
 
-<body>
-
-  <main>
-    <section>
-      <h3>Actividad 3.5.3</h3>
-      <h3>Construcción de Software y Toma de Decisiones</h3>
-
-      <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-        href="./pages/infoEquipo.html">Equipo de trabajo</a>
-      <article>
-        <div>
-          <button class="btn btn-primary" id="AddProductButton">Add product</button>
-        </div>
-        <table class="table">
-          <tbody id="tbody">
-
-          </tbody>
-        </table>
-      </article>
-    </section>
-
-  </main>
-
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 id="modal-title" id="staticBackdropLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div id="modal-body">
-          ...
-        </div>
-        <div id="modal-footer">
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div id="modal-body">...</div>
+          <div id="modal-footer"></div>
         </div>
       </div>
     </div>
-  </div>
-
-</body>
-<footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="./script/index.js"></script>
-</footer>
-
-
   </body>
   <footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./script/index.js"></script>
+  </footer>
+
+  <footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
     <script src="./script/script.js"></script>
+    <script src="./script/VerProducto.js"></script>
   </footer>
 </html>

@@ -326,78 +326,88 @@ function setModalAdd() {
   `;
 
   // Populate category select
-  fetch('https://dummyjson.com/products/categories')
-    .then(response => response.json())
-    .then(categories => {
-      const selectElement = document.getElementById('categoryInput');
-      categories.forEach(category => {
-        const option = document.createElement('option');
+  fetch("https://dummyjson.com/products/categories")
+    .then((response) => response.json())
+    .then((categories) => {
+      const selectElement = document.getElementById("categoryInput");
+      categories.forEach((category) => {
+        const option = document.createElement("option");
         option.text = category;
         option.value = category;
         selectElement.add(option);
       });
     })
-    .catch(error => {
-      console.error('Error fetching categories:', error);
+    .catch((error) => {
+      console.error("Error fetching categories:", error);
     });
 
-  fetch('https://dummyjson.com/products')
-  .then(response => response.json())
-  .then(data => {
-    const products = data.products;
-    const brands = [];
+  fetch("https://dummyjson.com/products")
+    .then((response) => response.json())
+    .then((data) => {
+      const products = data.products;
+      const brands = [];
 
-    // Extract all unique brands
-    products.forEach(product => {
-      if (!brands.includes(product.brand)) {
-        brands.push(product.brand);
-      }
-    });
+      // Extract all unique brands
+      products.forEach((product) => {
+        if (!brands.includes(product.brand)) {
+          brands.push(product.brand);
+        }
+      });
 
-    // Populate the select dropdown with brand options
-    const brandInput = document.getElementById('brandInput');
-    brands.forEach(brand => {
-      const option = document.createElement('option');
-      option.value = brand;
-      option.textContent = brand;
-      brandInput.appendChild(option);
+      // Populate the select dropdown with brand options
+      const brandInput = document.getElementById("brandInput");
+      brands.forEach((brand) => {
+        const option = document.createElement("option");
+        option.value = brand;
+        option.textContent = brand;
+        brandInput.appendChild(option);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
     });
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
 
   //VALIDATE FILLED INPUTS
-  const form = document.forms['modalForm'];
-  form.addEventListener('submit', function(event) {
-    const nameInput = document.getElementById('nameInput');
-    const descriptionInput = document.getElementById('descriptionInput');
-    const categoryInput = document.getElementById('categoryInput');
-    const brandInput = document.getElementById('brandInput');
-    const priceInput = document.getElementById('priceInput');
-    const discountInput = document.getElementById('discountInput');
-    const ratingInput = document.getElementById('ratingInput');
-    const stockInput = document.getElementById('stockInput');
-    const thumbnailInput = document.getElementById('thumbnailInput');
-    const imagesInput = document.getElementById('imagesInput');
-    
-    event.preventDefault(); // para que no redireccione cuando se manda
-    form.classList.add('was-validated');
+  const form = document.forms["modalForm"];
+  form.addEventListener(
+    "submit",
+    function (event) {
+      const nameInput = document.getElementById("nameInput");
+      const descriptionInput = document.getElementById("descriptionInput");
+      const categoryInput = document.getElementById("categoryInput");
+      const brandInput = document.getElementById("brandInput");
+      const priceInput = document.getElementById("priceInput");
+      const discountInput = document.getElementById("discountInput");
+      const ratingInput = document.getElementById("ratingInput");
+      const stockInput = document.getElementById("stockInput");
+      const thumbnailInput = document.getElementById("thumbnailInput");
+      const imagesInput = document.getElementById("imagesInput");
 
-    if (!nameInput.checkValidity() || !descriptionInput.checkValidity() 
-    || !brandInput.checkValidity() || !priceInput.checkValidity() 
-    || !discountInput.checkValidity() || !ratingInput.checkValidity() 
-    || !stockInput.checkValidity() || !thumbnailInput.checkValidity() 
-    || !categoryInput.checkValidity() || !imagesInput.checkValidity()) {
-      event.preventDefault(); 
-      event.stopPropagation();
-      return;
-    }
-    
-    // Posts answers
-    postData();
-    
-  }, false);
+      event.preventDefault(); // para que no redireccione cuando se manda
+      form.classList.add("was-validated");
+
+      if (
+        !nameInput.checkValidity() ||
+        !descriptionInput.checkValidity() ||
+        !brandInput.checkValidity() ||
+        !priceInput.checkValidity() ||
+        !discountInput.checkValidity() ||
+        !ratingInput.checkValidity() ||
+        !stockInput.checkValidity() ||
+        !thumbnailInput.checkValidity() ||
+        !categoryInput.checkValidity() ||
+        !imagesInput.checkValidity()
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      // Posts answers
+      postData();
+    },
+    false,
+  );
 }
 
 function postData() {
@@ -412,41 +422,40 @@ function postData() {
   let images = document.getElementById("imagesInput").value;
 
   let data = {
-      title,
-      thumbnail,
-      description,
-      stock,
-      brand,
-      category,
-      price,
-      rating,
-      images,
+    title,
+    thumbnail,
+    description,
+    stock,
+    brand,
+    category,
+    price,
+    rating,
+    images,
   };
 
-  fetch('https://dummyjson.com/products/add', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+  fetch("https://dummyjson.com/products/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(data => {
-      console.log('Success:', data);
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
       //getAllProducts(); //si se fuera a actualizar de verdad
       showSuccessAlert();
-      $('#staticBackdrop').modal('hide'); // quita el form
-  })
-  .catch((error) => {
-      console.error('Error:', error);
-  });
+      $("#staticBackdrop").modal("hide"); // quita el form
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 function showSuccessAlert() {
-  
-  const alertElement = document.createElement('div');
-  alertElement.classList.add('alert', 'alert-success');
-  alertElement.setAttribute('role', 'alert');
+  const alertElement = document.createElement("div");
+  alertElement.classList.add("alert", "alert-success");
+  alertElement.setAttribute("role", "alert");
   alertElement.textContent = "Operation was successful!";
 
   document.body.appendChild(alertElement);
@@ -454,9 +463,8 @@ function showSuccessAlert() {
   // Quita la alerta
   setTimeout(() => {
     alertElement.remove();
-  }, 5000); 
+  }, 5000);
 }
-
 
 /*function hideModal() {
   document.getElementById("modal-body").setAttribute("aria-hidden", "true");
