@@ -188,7 +188,7 @@ function setModalModify(id) {
             <div class="col">
               <label for="categoryInput" class="form-label">Category</label>
               <select class="form-select" id="categoryInput" required>
-                <option selected value="">${product.category}</option>
+                <option selected disabled value="${product.category}">${product.category}</option>
               </select>
               <div class="invalid-feedback">
                 Please select the product's category.
@@ -199,8 +199,8 @@ function setModalModify(id) {
             
             <div class="col">
               <label for="brandInput" class="form-label">Brand</label>
-              <select class="form-select" id="brandInput" value="${product.brand}" required>
-                <option selected value="">${product.brand}</option>
+              <select class="form-select" id="brandInput" required>
+                <option selected disabled value="${product.brand}">${product.brand}</option>
               </select>
               <div class="invalid-feedback">
                 Please select the product's brand.
@@ -262,13 +262,13 @@ function setModalModify(id) {
     
           <div class="mb-3">
             <label for="thumbnailInput">Thumbnail</label>
-            <input id="thumbnailInput" type="file" class="form-control" value="${product.thumbnail}" aria-label="file example">
+            <input id="thumbnailInput" type="url" class="form-control" value="${product.thumbnail}" aria-label="file example" required>
             <div class="invalid-feedback">Example invalid form file feedback</div>
           </div>
     
           <div class="mb-3">
             <label for="imagesInput">Images</label>
-            <input id="imagesInput" type="file" class="form-control" value="${product.images}" aria-label="file example" multiple>
+            <input id="imagesInput" type="url" class="form-control" value="${product.images}" aria-label="file example" multiple required>
             <div class="invalid-feedback">Example invalid form file feedback</div>
           </div>
     
@@ -276,6 +276,81 @@ function setModalModify(id) {
         </form>
       </div>
         `;
+
+        
+  // Populate category select
+  fetch('https://dummyjson.com/products/categories')
+    .then(response => response.json())
+    .then(categories => {
+      const selectElement = document.getElementById('categoryInput');
+      categories.forEach(category => {
+        const option = document.createElement('option');
+        option.text = category;
+        option.value = category;
+        selectElement.add(option);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching categories:', error);
+    });
+
+  fetch('https://dummyjson.com/products')
+  .then(response => response.json())
+  .then(data => {
+    const products = data.products;
+    const brands = [];
+
+    // Extract all unique brands
+    products.forEach(product => {
+      if (!brands.includes(product.brand)) {
+        brands.push(product.brand);
+      }
+    });
+
+    // Populate the select dropdown with brand options
+    const brandInput = document.getElementById('brandInput');
+    brands.forEach(brand => {
+      const option = document.createElement('option');
+      option.value = brand;
+      option.textContent = brand;
+      brandInput.appendChild(option);
+    });
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+
+  //VALIDATE FILLED INPUTS
+  const form = document.forms['modalForm'];
+  form.addEventListener('submit', function(event) {
+    const nameInput = document.getElementById('nameInput');
+    const descriptionInput = document.getElementById('descriptionInput');
+    const categoryInput = document.getElementById('categoryInput');
+    const brandInput = document.getElementById('brandInput');
+    const priceInput = document.getElementById('priceInput');
+    const discountInput = document.getElementById('discountInput');
+    const ratingInput = document.getElementById('ratingInput');
+    const stockInput = document.getElementById('stockInput');
+    const thumbnailInput = document.getElementById('thumbnailInput');
+    const imagesInput = document.getElementById('imagesInput');
+    
+    event.preventDefault(); // para que no redireccione cuando se manda
+    form.classList.add('was-validated');
+
+    if (!nameInput.checkValidity() || !descriptionInput.checkValidity() 
+    || !brandInput.checkValidity() || !priceInput.checkValidity() 
+    || !discountInput.checkValidity() || !ratingInput.checkValidity() 
+    || !stockInput.checkValidity() || !thumbnailInput.checkValidity() 
+    || !categoryInput.checkValidity() || !imagesInput.checkValidity()) {
+      event.preventDefault(); 
+      event.stopPropagation();
+      return;
+    }
+    
+    // Posts answers
+    postData();
+    
+  }, false);
     });
 }
 
@@ -387,13 +462,13 @@ function setModalAdd() {
 
       <div class="mb-3">
         <label for="thumbnailInput">Thumbnail</label>
-        <input id="thumbnailInput" type="file" class="form-control" aria-label="file example">
+        <input id="thumbnailInput" type="file" class="form-control" aria-label="file example" required>
         <div class="invalid-feedback">Example invalid form file feedback</div>
       </div>
 
       <div class="mb-3">
         <label for="imagesInput">Images</label>
-        <input id="imagesInput" type="file" class="form-control" aria-label="file example" multiple>
+        <input id="imagesInput" type="file" class="form-control" aria-label="file example" multiple required>
         <div class="invalid-feedback">Example invalid form file feedback</div>
       </div>
 
