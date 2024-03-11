@@ -1,7 +1,4 @@
-// let max_queries = [0, 10]
-
-// function movingPages(page_num):
-function getAllProducts() {
+function getAllProducts(q) {
   fetch("https://dummyjson.com/products")
     .then((res) => res.json())
     .then((data) => {
@@ -14,20 +11,21 @@ function getAllProducts() {
       btnAdd.setAttribute("data-bs-toggle", "modal");
       btnAdd.setAttribute("data-bs-target", "#staticBackdrop");
 
-      tbody.innerHTML = `<tr>
+      tbody.innerHTML = `<tr> 
             <th>Id</th>
-            <th></th>
             <th>Title</th>
             <th>Description</th>
+            <th>Price</th>
             <th>Discount %</th>
+            <th>Rating</th>
+            <th>Stock</th>
             <th>Brand</th>
             <th>Category</th>
-            <th>Price</th>
-            <th>Rating</th>
+            <th>Thumbnail</th>
+            <th>Images</th>
             <th><Modificar></th>
-            <th><Eliminar></th>
-            <th><Info></th>
           </tr>`;
+      let imageIndex = 0;
 
       products.forEach((product) => {
         // New table row
@@ -55,11 +53,17 @@ function getAllProducts() {
         tdDesc.textContent = product.description;
         tr.appendChild(tdDesc);
 
+
         // Discount cell
         let tdDisc = document.createElement("td");
         // Example of using variables with template literals ``
         tdDisc.textContent = `${product.discountPercentage} %`;
         tr.appendChild(tdDisc);
+
+        // Stock cell
+        let tdStock = document.createElement("td");
+        tdStock.textContent = product.stock;
+        tr.appendChild(tdStock);
 
         // Brand cell
         let tdBrand = document.createElement("td");
@@ -81,13 +85,6 @@ function getAllProducts() {
         tdRating.textContent = product.rating;
         tr.appendChild(tdRating);
 
-        // Eliminar cell
-        let tdEl = document.createElement("td");
-        let btnEl = document.createElement("button");
-        btnEl.textContent = "Eliminar";
-        btnEl.setAttribute("class", "btn btn-outline-secondary");
-        tdEl.appendChild(btnEl);
-        tr.appendChild(tdEl);
 
         // Modificar cell
         let tdMod = document.createElement("td");
@@ -472,4 +469,48 @@ function showSuccessAlert() {
   document.getElementById("exampleModal").style.display = "none";
 }*/
 
-getAllProducts();
+function changeIdDefault() {
+  let parent = document.getElementsByClassName('pagination')[0]; // Assuming there's only one element with class 'pagination'
+  let children = parent.children;
+
+  for (let i = 0; i < children.length; i++) {
+    if (children[i].classList.contains('disable')) {
+      children[i].classList.remove('disable');
+    }
+    if (children[i].classList.contains('active')) {
+      children[i].classList.remove('active');
+    }
+  }
+}
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+
+function setActiveItem(strn) {
+  changeIdDefault();
+  let elem = document.getElementById('page' + strn);
+  console.log(elem.textContent)
+  elem.classList.add("active");
+}
+
+function displayImages(images, container, currentIndex) {
+  let tdImages = document.createElement("div");
+  let image = document.createElement("img");
+
+  if (currentIndex < images.length - 1) {
+    currentIndex++;
+    image.src = images[currentIndex];
+    image.width = 50;
+    tdImages.appendChild(image);
+  } else {
+    return;
+  }
+  removeAllChildNodes(container);
+  container.appendChild(tdImages);
+  return currentIndex;
+}
+
+getAllProducts(10);
