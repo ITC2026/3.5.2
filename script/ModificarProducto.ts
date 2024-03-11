@@ -194,9 +194,3 @@ async function setModalModify(id: string): Promise<void> {
       console.error('Error:', error);
     }
   }
-  
-  // Function to handle the form submission
-  function postData() {
-    // Implement the logic for posting data here
-  }
-  
