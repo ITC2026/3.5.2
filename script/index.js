@@ -375,6 +375,51 @@ function changeIdDefault() {
   }
 }
 
+function updateData(id) {
+  console.log('updateData function called');
+
+  // Toma los elementos modificados para actualizarlos
+  let title = document.getElementById("nameInput").value;
+  let thumbnail = document.getElementById("thumbnailInput").value;
+  let description = document.getElementById("descriptionInput").value;
+  let stock = document.getElementById("stockInput").value;
+  let brand = document.getElementById("brandInput").value;
+  let category = document.getElementById("categoryInput").value;
+  let price = document.getElementById("priceInput").value;
+  let rating = document.getElementById("ratingInput").value;
+  let images = document.getElementById("imagesInput").value;
+
+  let data = {
+      title,
+      thumbnail,
+      description,
+      stock,
+      brand,
+      category,
+      price,
+      rating,
+      images,
+  };
+
+  // Se usa PATCH para actualizar los datos individuales
+  fetch(`https://dummyjson.com/products/${id}`, {
+      method: 'PATCH', 
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Success:', data);
+      showSuccessAlert();
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+}
+
+
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
