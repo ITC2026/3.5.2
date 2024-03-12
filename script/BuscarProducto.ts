@@ -1,4 +1,4 @@
-import { displayProducts, populateCategories } from "./index";
+import { displayProducts, populateCategories } from "./index.js";
 
 function setModalSearch(): void {
   const modalTitle = document.getElementById("modal-title") as HTMLElement;

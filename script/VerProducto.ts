@@ -42,3 +42,4 @@ function setModalInfo(id: number) {
           `;
     });
 }
+
