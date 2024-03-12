@@ -1,7 +1,7 @@
 let currentPage = 0;
 const productsPerPage = 10;
 
-function getAllProducts(page) {
+function getAllProducts() {
   fetch("https://dummyjson.com/products")
     .then((res) => res.json())
     .then((data) => {
