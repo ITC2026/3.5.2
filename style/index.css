@@ -57,10 +57,31 @@ article div {
 
 /* Tables */
 table {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
   margin-top: 40px;
-  width: 90%;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+th,
+td {
   border: 1px solid rgb(164, 164, 164);
-  border-collapse: collapse;
+  padding: 10px;
+}
+
+td:last-child {
+  border-right: 1px solid rgb(164, 164, 164);
+}
+
+tr:nth-of-type(odd) {
+  background: rgb(225, 225, 225);
+}
+
+.cell {
+  border: none;
+  border-bottom: 1px solid rgb(164, 164, 164);
 }
 
 th {
@@ -72,6 +93,14 @@ th {
   width: 100vh;
 }
 
+.modcell {
+  border: 1px solid rgb(164, 164, 164);
+  border-right: none;
+}
+.infcell {
+  border-right: 1px solid rgb(164, 164, 164);
+  border-left: none;
+}
 td {
   font-size: small;
   padding: 10px 5px;
@@ -106,58 +135,6 @@ tr:nth-of-type(odd) {
 
 .prod-desc {
   margin-top: 1rem;
-}
-
-.pagination {
-  float: right;
-  margin: 0 0 5px;
-}
-
-.pagination li a {
-  border: none;
-  font-size: 13px;
-  min-width: 30px;
-  min-height: 30px;
-  color: #999;
-  margin: 0 2px;
-  line-height: 30px;
-  border-radius: 2px !important;
-  text-align: center;
-  padding: 0 6px;
-}
-
-.pagination li a:hover {
-  color: #666;
-}
-
-.pagination li.active a,
-.pagination li.active a.page-link {
-  background: #03A9F4;
-}
-
-.pagination li.active a:hover {
-  background: #0397d6;
-}
-
-.pagination li.disabled i {
-  color: #ccc;
-}
-
-.pagination li i {
-  font-size: 16px;
-  padding-top: 6px
-}
-
-#hint-text {
-  display: flex;
-  align-content: center;
-  font-size: 13px;
-  width: 11rem;
-
-  height: 1rem;
-  margin-top: 5px;
-  white-space: nowrap;
-  justify-content: space-between;
 }
 
 #modal-footer {
@@ -207,10 +184,19 @@ th {
   display: flex;
   flex-wrap: wrap;
   background: #fff;
+  width: 100%;
   padding: 20px 25px;
   margin: 30px 0;
   border-radius: 3px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  overflow-x: auto;
+}
+
+
+@media screen and (max-width: 680px) {
+  .table-wrapper table {
+    padding-left: 1000px; 
+  }
 }
 
 .table-title {
