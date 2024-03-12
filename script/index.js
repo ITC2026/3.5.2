@@ -121,7 +121,7 @@ function displayProducts(products, currentPage, search = null) {
     imgButton.textContent = "Show";
     imgButton.setAttribute("class", "btn btn-outline-secondary");
     imgButton.onclick = () => {
-      dispImages(product.title, product.images[0]);
+      displayImages(product.title, product.images);
     };
     imgButton.setAttribute("data-bs-toggle", "modal");
     imgButton.setAttribute("data-bs-target", "#staticBackdrop");
@@ -369,17 +369,85 @@ function setActiveItem(strn) {
   elem.classList.add("active");
 }
 
-function dispImages(productTitle, productImgs) {
+function displayImages(productTitle, productImgs) {
   var modalTitle = document.getElementById("modal-title");
   if (modalTitle)
-    modalTitle.textContent = "arriba";
+    modalTitle.textContent = `Images of ${productTitle}`;
   var modalBody = document.getElementById("modal-body");
-  if (modalBody)
-    modalBody.innerHTML = `
-    <div>
-      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
-    </div>
-  `;
+  if (modalBody) {
+    // Clear previous carousel content
+    modalBody.innerHTML = '';
+
+    // Create carousel container
+    var carousel = document.createElement('div');
+    carousel.id = 'carouselExampleControls';
+    carousel.classList.add('carousel', 'slide');
+    carousel.setAttribute('data-ride', 'carousel');
+
+    // Create carousel inner container
+    var carouselInner = document.createElement('div');
+    carouselInner.classList.add('carousel-inner');
+
+    // Create carousel items for each image
+    productImgs.forEach((imgSrc, index) => {
+      var carouselItem = document.createElement('div');
+      carouselItem.classList.add('carousel-item');
+      if (index === 0) {
+        carouselItem.classList.add('active');
+      }
+
+      var img = document.createElement('img');
+      img.classList.add('d-block', 'w-100');
+      img.src = imgSrc;
+      img.alt = `Slide ${index + 1}`;
+
+      carouselItem.appendChild(img);
+      carouselInner.appendChild(carouselItem);
+    });
+
+    carousel.appendChild(carouselInner);
+
+    // Create carousel controls
+    var prevControl = document.createElement('a');
+    prevControl.classList.add('carousel-control-prev');
+    prevControl.href = '#carouselExampleControls';
+    prevControl.role = 'button';
+    prevControl.setAttribute('data-slide', 'prev');
+
+    var prevIcon = document.createElement('span');
+    prevIcon.classList.add('carousel-control-prev-icon');
+    prevIcon.setAttribute('aria-hidden', 'true');
+
+    var prevText = document.createElement('span');
+    prevText.classList.add('sr-only');
+    prevText.textContent = 'Previous';
+
+    prevControl.appendChild(prevIcon);
+    prevControl.appendChild(prevText);
+
+    var nextControl = document.createElement('a');
+    nextControl.classList.add('carousel-control-next');
+    nextControl.href = '#carouselExampleControls';
+    nextControl.role = 'button';
+    nextControl.setAttribute('data-slide', 'next');
+
+    var nextIcon = document.createElement('span');
+    nextIcon.classList.add('carousel-control-next-icon');
+    nextIcon.setAttribute('aria-hidden', 'true');
+
+    var nextText = document.createElement('span');
+    nextText.classList.add('sr-only');
+    nextText.textContent = 'Next';
+
+    nextControl.appendChild(nextIcon);
+    nextControl.appendChild(nextText);
+
+    carousel.appendChild(prevControl);
+    carousel.appendChild(nextControl);
+
+    modalBody.appendChild(carousel);
+  }
 }
+
 
 getAllProducts();
