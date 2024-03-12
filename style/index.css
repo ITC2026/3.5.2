@@ -196,6 +196,13 @@ th {
 @media screen and (max-width: 680px) {
   .table-wrapper table {
     padding-left: 1000px; 
+    transform: scaleX(.9);
+  }
+  .table-wrapper  table thead tr {
+    transform: scaleX(.9);
+  }
+  .table-wrapper  table thead tr td{
+    padding: 4px;
   }
 }
 
