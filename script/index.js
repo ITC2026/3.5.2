@@ -36,20 +36,21 @@ function displayProducts(products, currentPage, search = null) {
   btnSearchModal.setAttribute("data-bs-toggle", "modal");
   btnSearchModal.setAttribute("data-bs-target", "#staticBackdrop");
 
-  tbody.innerHTML = `<tr>
-        <th>Id</th>
-        <th></th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Discount %</th>
-        <th>Brand</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th>Rating</th>
-        <th><Modificar></th>
-        <th><Eliminar></th>
-        <th><Info></th>
-      </tr>`;
+  tbody.innerHTML = `<tr> 
+            <th>Id</th>
+            <th>Thumbnail</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Discount %</th>
+            <th>Stock</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Images</th>
+            <th class = "modcell"></th>
+            <th class = "infcell"></th>
+          </tr>`;
 
 
 
@@ -62,56 +63,72 @@ function displayProducts(products, currentPage, search = null) {
   productsForPage.forEach((product) => {
     let tr = document.createElement("tr");
 
-    // Id cell
     let tdId = document.createElement("td");
     tdId.textContent = product.id;
+    tdId.className = "firstcell";
     tr.appendChild(tdId);
 
-    // Thumbnail cell
     let tdThumb = document.createElement("td");
     let img = document.createElement("img");
     img.src = product.thumbnail;
     img.width = 50;
+    tdThumb.className = "cell";
     tdThumb.appendChild(img);
     tr.appendChild(tdThumb);
 
-    // Title cell
     let tdTitle = document.createElement("td");
     tdTitle.textContent = product.title;
+    tdTitle.className = "cell";
     tr.appendChild(tdTitle);
 
-    // Desc cell
     let tdDesc = document.createElement("td");
     tdDesc.textContent = product.description;
+    tdDesc.className = "cell";
     tr.appendChild(tdDesc);
 
-    // Discount cell
     let tdDisc = document.createElement("td");
-    // Ejemplo de uso de variables de js con texto ``
     tdDisc.textContent = `${product.discountPercentage} %`;
+    tdDisc.className = "cell";
     tr.appendChild(tdDisc);
 
-    // Brand cell
+    let tdStock = document.createElement("td");
+    tdStock.textContent = product.stock;
+    tdStock.className = "cell";
+    tr.appendChild(tdStock);
+
     let tdBrand = document.createElement("td");
     tdBrand.textContent = product.brand;
+    tdBrand.className = "cell";
     tr.appendChild(tdBrand);
 
-    // Category cell
     let tdCategory = document.createElement("td");
     tdCategory.textContent = product.category;
+    tdCategory.className = "cell";
     tr.appendChild(tdCategory);
 
-    // Price cell
     let tdPrice = document.createElement("td");
     tdPrice.textContent = "$ " + product.price;
+    tdPrice.className = "cell";
     tr.appendChild(tdPrice);
 
-    // Rating cell
     let tdRating = document.createElement("td");
     tdRating.textContent = product.rating;
+    tdRating.className = "cell";
     tr.appendChild(tdRating);
 
-    // Modificar cell
+    let tdImages = document.createElement("td");
+    let imgButton = document.createElement("button");
+    imgButton.textContent = "Show";
+    imgButton.setAttribute("class", "btn btn-outline-secondary");
+    imgButton.onclick = () => {
+      dispImages(product.title, product.images[0]);
+    };
+    imgButton.setAttribute("data-bs-toggle", "modal");
+    imgButton.setAttribute("data-bs-target", "#staticBackdrop");
+    tdImages.appendChild(imgButton);
+    tdImages.className = "cell";
+    tr.appendChild(tdImages);
+
     let tdMod = document.createElement("td");
     let btnMod = document.createElement("button");
     btnMod.textContent = "Modificar";
@@ -120,23 +137,20 @@ function displayProducts(products, currentPage, search = null) {
     btnMod.setAttribute("data-bs-toggle", "modal");
     btnMod.setAttribute("data-bs-target", "#staticBackdrop");
     tdMod.appendChild(btnMod);
-
+    tdMod.className = "cell";
     tr.appendChild(tdMod);
 
-    //Info de cell
     let tdInfo = document.createElement("td");
     let btnInfo = document.createElement("button");
     btnInfo.textContent = "Info";
     btnInfo.setAttribute("class", "btn btn-outline-secondary");
     btnInfo.onclick = () => setModalInfo(product.id);
-
     btnInfo.setAttribute("data-bs-toggle", "modal");
     btnInfo.setAttribute("data-bs-target", "#staticBackdrop");
     tdInfo.appendChild(btnInfo);
-
+    tdInfo.className = "cell";
     tr.appendChild(tdInfo);
 
-    // products[i].id
     tbody.appendChild(tr);
   }
   );
@@ -355,21 +369,17 @@ function setActiveItem(strn) {
   elem.classList.add("active");
 }
 
-function displayImages(images, container, currentIndex) {
-  let tdImages = document.createElement("div");
-  let image = document.createElement("img");
-
-  if (currentIndex < images.length - 1) {
-    currentIndex++;
-    image.src = images[currentIndex];
-    image.width = 50;
-    tdImages.appendChild(image);
-  } else {
-    return;
-  }
-  removeAllChildNodes(container);
-  container.appendChild(tdImages);
-  return currentIndex;
+function dispImages(productTitle, productImgs) {
+  var modalTitle = document.getElementById("modal-title");
+  if (modalTitle)
+    modalTitle.textContent = "arriba";
+  var modalBody = document.getElementById("modal-body");
+  if (modalBody)
+    modalBody.innerHTML = `
+    <div>
+      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+    </div>
+  `;
 }
 
 getAllProducts();
