@@ -6,11 +6,10 @@ function setModalInfo(id: number) {
       let modalTitle = document.getElementById("modal-title");
       let modalBody = document.getElementById("modal-body");
       let modalFooter = document.getElementById("modal-footer");
+
       if (!modalTitle || !modalBody || !modalFooter) {
         return;
       }
-
-      console.log(product);
 
       modalTitle.textContent = product.title;
       modalBody.innerHTML = `
