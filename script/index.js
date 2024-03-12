@@ -32,11 +32,6 @@ function getAllProducts(page) {
 
       const endIndex = (currentPage + 1) * productsPerPage;
       const startIndex = endIndex - 10;
-
-      console.log(
-        `page: ${page}, startIndex: ${startIndex}, endIndex: ${endIndex}, productsPerPage: ${productsPerPage}`
-      );
-
       const productsForPage = products.slice(startIndex, endIndex);
 
       productsForPage.forEach((product) => {

@@ -10,15 +10,35 @@ function setModalInfo(id: number) {
         return;
       }
 
+      console.log(product);
+
       modalTitle.textContent = product.title;
       modalBody.innerHTML = `
-          <div class="modal-body">
+          <div>
             <img src="${product.thumbnail}" width="100" />
-            <p>${product.description}</p>
-            <p>Brand: ${product.brand}</p>
-            <p>Category: ${product.category}</p>
-            <p>Price: $${product.price}</p>
-            <p>Rating: ${product.rating}</p>
+            <p class = "product-desc">${product.description}</p>
+            <p><b>Brand:</b> ${product.brand}</p>
+            <p><b>Category:</b> ${product.category}</p>
+            <p><b>Price:</b> $${product.price}</p>
+            <p><b>Rating:</b> ${product.rating}</p>
+            <style type="text/css">
+
+            .product-desc {
+              margin-top:1rem;
+            }
+
+            #modal-body {
+                  text-align: left;
+                  width: 80%;
+                  margin-left: 2rem;
+              }
+              #modal-body img {
+                width: 60%;
+                height: auto;
+              }
+
+
+            </style>
           </div>
           `;
 
