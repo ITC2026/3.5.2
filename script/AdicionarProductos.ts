@@ -1,10 +1,11 @@
 function setModalAdd(): void {
-    //CREATING MODAL
-    let modalTitle: HTMLElement | null = document.getElementById("modal-title");
-    if (modalTitle) modalTitle.textContent = "Add Product";
+  //CREATING MODAL
+  let modalTitle: HTMLElement | null = document.getElementById("modal-title");
+  if (modalTitle) modalTitle.textContent = "Add Product";
 
-    let modalBody: HTMLElement | null = document.getElementById("modal-body");
-    if (modalBody) modalBody.innerHTML = `
+  let modalBody: HTMLElement | null = document.getElementById("modal-body");
+  if (modalBody)
+    modalBody.innerHTML = `
     <div class="modal-body p-5 my-0">
       <form class="needs-validation" autocomplete="off" name="modalForm" novalidate netlify>
 
@@ -121,66 +122,96 @@ function setModalAdd(): void {
     </div>
     `;
 
-    // Populate category select
-    fetch('https://dummyjson.com/products/categories')
-      .then(response => response.json())
-      .then((categories: string[]) => {
-        const selectElement: HTMLSelectElement | null = document.getElementById('categoryInput') as HTMLSelectElement | null;
-        if (selectElement) {
-          categories.forEach(category => {
-            const option = document.createElement('option');
-            option.text = category;
-            option.value = category;
-            selectElement.add(option);
-          });
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching categories:', error);
-      });
-
-    fetch('https://dummyjson.com/products')
-      .then(response => response.json())
-      .then((data: { products: { brand: string }[] }) => {
-        const products = data.products;
-        const brands: string[] = [];
-
-        // Extract all unique brands
-        products.forEach(product => {
-          if (!brands.includes(product.brand)) {
-            brands.push(product.brand);
-          }
+  // Populate category select
+  fetch("https://dummyjson.com/products/categories")
+    .then((response) => response.json())
+    .then((categories: string[]) => {
+      const selectElement: HTMLSelectElement | null = document.getElementById(
+        "categoryInput"
+      ) as HTMLSelectElement | null;
+      if (selectElement) {
+        categories.forEach((category) => {
+          const option = document.createElement("option");
+          option.text = category;
+          option.value = category;
+          selectElement.add(option);
         });
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching categories:", error);
+    });
 
-        // Populate the select dropdown with brand options
-        const brandInput: HTMLSelectElement | null = document.getElementById('brandInput') as HTMLSelectElement | null;
-        if (brandInput) {
-          brands.forEach(brand => {
-            const option = document.createElement('option');
-            option.value = brand;
-            option.textContent = brand;
-            brandInput.appendChild(option);
-          });
+  fetch("https://dummyjson.com/products")
+    .then((response) => response.json())
+    .then((data: { products: { brand: string }[] }) => {
+      const products = data.products;
+      const brands: string[] = [];
+
+      // Extract all unique brands
+      for (let i = 0; i < products.length; i++) {
+        const product = products[i];
+        if (brands.indexOf(product.brand) === -1) {
+          brands.push(product.brand);
         }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+      }
 
-    //VALIDATE FILLED INPUTS
-    const form: HTMLFormElement | null = document.querySelector('form[name="modalForm"]');
-    if (form) {
-      form.addEventListener('submit', function(event) {
-        const nameInput: HTMLInputElement | null = document.getElementById('nameInput') as HTMLInputElement | null;
-        const descriptionInput: HTMLTextAreaElement | null = document.getElementById('descriptionInput') as HTMLTextAreaElement | null;
-        const categoryInput: HTMLSelectElement | null = document.getElementById('categoryInput') as HTMLSelectElement | null;
-        const brandInput: HTMLSelectElement | null = document.getElementById('brandInput') as HTMLSelectElement | null;
-        const priceInput: HTMLInputElement | null = document.getElementById('priceInput') as HTMLInputElement | null;
-        const discountInput: HTMLInputElement | null = document.getElementById('discountInput') as HTMLInputElement | null;
-        const ratingInput: HTMLInputElement | null = document.getElementById('ratingInput') as HTMLInputElement | null;
-        const stockInput: HTMLInputElement | null = document.getElementById('stockInput') as HTMLInputElement | null;
-        const thumbnailInput: HTMLInputElement | null = document.getElementById('thumbnailInput') as HTMLInputElement | null;
-        const imagesInput: HTMLInputElement | null = document.getElementById('imagesInput') as HTMLInputElement | null;
+      // Populate the select dropdown with brand options
+      const brandInput: HTMLSelectElement | null = document.getElementById(
+        "brandInput"
+      ) as HTMLSelectElement | null;
+      if (brandInput) {
+        brands.forEach((brand) => {
+          const option = document.createElement("option");
+          option.value = brand;
+          option.textContent = brand;
+          brandInput.appendChild(option);
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+
+  //VALIDATE FILLED INPUTS
+  const form: HTMLFormElement | null = document.querySelector(
+    'form[name="modalForm"]'
+  );
+  if (form) {
+    form.addEventListener(
+      "submit",
+      function (event) {
+        const nameInput: HTMLInputElement | null = document.getElementById(
+          "nameInput"
+        ) as HTMLInputElement | null;
+        const descriptionInput: HTMLTextAreaElement | null =
+          document.getElementById(
+            "descriptionInput"
+          ) as HTMLTextAreaElement | null;
+        const categoryInput: HTMLSelectElement | null = document.getElementById(
+          "categoryInput"
+        ) as HTMLSelectElement | null;
+        const brandInput: HTMLSelectElement | null = document.getElementById(
+          "brandInput"
+        ) as HTMLSelectElement | null;
+        const priceInput: HTMLInputElement | null = document.getElementById(
+          "priceInput"
+        ) as HTMLInputElement | null;
+        const discountInput: HTMLInputElement | null = document.getElementById(
+          "discountInput"
+        ) as HTMLInputElement | null;
+        const ratingInput: HTMLInputElement | null = document.getElementById(
+          "ratingInput"
+        ) as HTMLInputElement | null;
+        const stockInput: HTMLInputElement | null = document.getElementById(
+          "stockInput"
+        ) as HTMLInputElement | null;
+        const thumbnailInput: HTMLInputElement | null = document.getElementById(
+          "thumbnailInput"
+        ) as HTMLInputElement | null;
+        const imagesInput: HTMLInputElement | null = document.getElementById(
+          "imagesInput"
+        ) as HTMLInputElement | null;
 
         event.preventDefault(); // para que no redireccione cuando se manda
         if (form.checkValidity()) {
@@ -189,10 +220,12 @@ function setModalAdd(): void {
           event.stopPropagation();
         }
 
-        form.classList.add('was-validated');
-      }, false);
-    }
+        form.classList.add("was-validated");
+      },
+      false
+    );
   }
+}
 
 
 
@@ -258,7 +291,13 @@ function setModalAdd(): void {
     alertElement.setAttribute('role', 'alert');
     alertElement.textContent = "Operation was successful!";
 
-    document.body.appendChild(alertElement);
+    let alertMessage = document.getElementById('alert-messages');
+
+    if (!alertMessage) {
+      return 
+    }
+
+    alertMessage.appendChild(alertElement);
 
     // Quita la alerta
     setTimeout(() => {
