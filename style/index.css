@@ -112,6 +112,7 @@ tr:nth-of-type(odd) {
   float: right;
   margin: 0 0 5px;
 }
+
 .pagination li a {
   border: none;
   font-size: 13px;
@@ -124,27 +125,40 @@ tr:nth-of-type(odd) {
   text-align: center;
   padding: 0 6px;
 }
+
 .pagination li a:hover {
   color: #666;
-}	
-.pagination li.active a, .pagination li.active a.page-link {
+}
+
+.pagination li.active a,
+.pagination li.active a.page-link {
   background: #03A9F4;
 }
-.pagination li.active a:hover {        
+
+.pagination li.active a:hover {
   background: #0397d6;
 }
+
 .pagination li.disabled i {
   color: #ccc;
 }
+
 .pagination li i {
   font-size: 16px;
   padding-top: 6px
 }
-.hint-text {
-  float: left;
-  margin-top: 10px;
+
+#hint-text {
+  display: flex;
+  align-content: center;
   font-size: 13px;
-}    
+  width: 11rem;
+
+  height: 1rem;
+  margin-top: 5px;
+  white-space: nowrap;
+  justify-content: space-between;
+}
 
 #modal-footer {
   margin-bottom: 2rem;

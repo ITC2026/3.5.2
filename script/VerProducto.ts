@@ -40,11 +40,5 @@ function setModalInfo(id: number) {
             </style>
           </div>
           `;
-
-      modalFooter.innerHTML = `
-        <div>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
-        </div>
-            `;
     });
 }
