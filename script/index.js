@@ -315,10 +315,6 @@ function searchProducts(name, maxPrice, category) {
     postData();
     
   }, false);
-}
-
-
-
 
 
 /*function hideModal() {
