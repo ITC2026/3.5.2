@@ -1,4 +1,7 @@
-function getAllProducts() {
+let currentPage = 0;
+const productsPerPage = 10;
+
+function getAllProducts(page) {
   fetch("https://dummyjson.com/products")
     .then((res) => res.json())
     .then((data) => {
@@ -519,7 +522,34 @@ function setModalAdd() {
   }, false);
 }
 
-function postData() {
+
+
+
+
+/*function hideModal() {
+  document.getElementById("modal-body").setAttribute("aria-hidden", "true");
+  document.getElementById("exampleModal").classList.remove("show");
+  document.getElementById("exampleModal").style.display = "none";
+}*/
+
+function changeIdDefault() {
+  let parent = document.getElementsByClassName("pagination")[0]; // Assuming there's only one element with class 'pagination'
+  let children = parent.children;
+
+  for (let i = 0; i < children.length; i++) {
+    if (children[i].classList.contains("disable")) {
+      children[i].classList.remove("disable");
+    }
+    if (children[i].classList.contains("active")) {
+      children[i].classList.remove("active");
+    }
+  }
+}
+
+function updateData(id) {
+  console.log('updateData function called');
+
+  // Toma los elementos modificados para actualizarlos
   let title = document.getElementById("nameInput").value;
   let thumbnail = document.getElementById("thumbnailInput").value;
   let description = document.getElementById("descriptionInput").value;
@@ -542,8 +572,9 @@ function postData() {
       images,
   };
 
-  fetch('https://dummyjson.com/products/add', {
-      method: 'POST',
+  // Se usa PATCH para actualizar los datos individuales
+  fetch(`https://dummyjson.com/products/${id}`, {
+      method: 'PATCH', 
       headers: {
           'Content-Type': 'application/json',
       },
@@ -552,36 +583,43 @@ function postData() {
   .then(response => response.json())
   .then(data => {
       console.log('Success:', data);
-      //getAllProducts(); //si se fuera a actualizar de verdad
       showSuccessAlert();
-      $('#staticBackdrop').modal('hide'); // quita el form
   })
-  .catch((error) => {
+  .catch(error => {
       console.error('Error:', error);
   });
 }
 
-function showSuccessAlert() {
-  
-  const alertElement = document.createElement('div');
-  alertElement.classList.add('alert', 'alert-success');
-  alertElement.setAttribute('role', 'alert');
-  alertElement.textContent = "Operation was successful!";
 
-  document.body.appendChild(alertElement);
-
-  // Quita la alerta
-  setTimeout(() => {
-    alertElement.remove();
-  }, 5000); 
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
 
+function setActiveItem(strn) {
+  changeIdDefault();
+  let elem = document.getElementById("page" + strn);
+  console.log("strn: ", strn);
+  currentPage = strn - 1;
+  elem.classList.add("active");
+}
 
-/*function hideModal() {
-  document.getElementById("modal-body").setAttribute("aria-hidden", "true");
-  document.getElementById("exampleModal").classList.remove("show");
-  document.getElementById("exampleModal").style.display = "none";
-}*/
+function displayImages(images, container, currentIndex) {
+  let tdImages = document.createElement("div");
+  let image = document.createElement("img");
 
+  if (currentIndex < images.length - 1) {
+    currentIndex++;
+    image.src = images[currentIndex];
+    image.width = 50;
+    tdImages.appendChild(image);
+  } else {
+    return;
+  }
+  removeAllChildNodes(container);
+  container.appendChild(tdImages);
+  return currentIndex;
+}
 
 getAllProducts();
