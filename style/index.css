@@ -134,6 +134,15 @@ tr:nth-of-type(odd) {
   max-height: 80%;
 }
 
+.modal-dialog {
+  overflow-y: initial !important;
+}
+
+.modal-body {
+  height: 60vh;
+  overflow-y: auto;
+}
+
 .prod-desc {
   margin-top: 1rem;
 }

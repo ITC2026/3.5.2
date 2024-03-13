@@ -30,32 +30,29 @@
 
       <div id="alert-messages"> </div>
       <article>
-
-
         <div class="container">
-          <div class="table-wrapper">
-            <div class="table-title">
-              <button class="btn btn-primary" id="AddProductButton">Add product</button>
-              <button id="SearchProductButton" class="btn btn-primary">Search Product</button>
-            </div>
-            <div class="table-responsive text-center">
-              <table class="table table-striped table-hover">
-                <thead id="tbody"></thead>
-              </table>
-            </div>
-            <div id="hint-text">Showing <b> 10 </b> out of <b> 30 </b> entries</div>
-            <ul class="pagination">
-              <li class="page-item active" id="page1"><a href="#" onclick="getAllProducts();setActiveItem('1')"
-                  class="page-link">1</a></li>
-              <li class="page-item" id="page2"><a href="#" onclick="getAllProducts();setActiveItem('2')"
-                  class="page-link">2</a></li>
-              <li class="page-item" id="page3"><a href="#" onclick="getAllProducts();setActiveItem('3')"
-                  class="page-link">3</a></li>
-            </ul>
-          </div>
+			<div class="table-wrapper">
+				<div class="table-title">
+					<button class="btn btn-primary" id="AddProductButton">Add product</button>
+					<button id="SearchProductButton" class="btn btn-primary">Search Product</button>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped table-hover">
+						<thead id="tbody"></thead>
+					</table>
+				</div>
+				<div id="hint-text">Showing <b> 10 </b> out of <b> 30 </b> entries</div>
+					<ul class="pagination">
+						<li class="page-item active" id="page1"><a href="#" onclick="getAllProducts();setActiveItem('1')"
+							class="page-link">1</a></li>
+						<li class="page-item" id="page2"><a href="#" onclick="getAllProducts();setActiveItem('2')"
+							class="page-link">2</a></li>
+						<li class="page-item" id="page3"><a href="#" onclick="getAllProducts();setActiveItem('3')"
+							class="page-link">3</a></li>
+					</ul>
+				</div>
+			</div>
         </div>
-
-
       </article>
     </section>
   </main>
@@ -88,8 +85,8 @@
     <script type="module" src="./script/AdicionarProductos.js"></script>
     <script type="module" src="./script/ModificarProducto.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   </footer>
 
