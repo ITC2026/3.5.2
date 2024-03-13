@@ -78,7 +78,7 @@ async function setModalModify(id: string): Promise<void> {
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroupPrepend">%</span>
               </div>
-              <input type="number" class="form-control" id="discountInput" value="${product.discountPercentage}" aria-describedby="inputGroupPrepend" required>
+              <input type="number" class="form-control" id="discountInput" value="${product.discountPercentage}" aria-describedby="inputGroupPrepend" step="0.01" min="0" max="100" required>
               <div class="invalid-feedback">
               Please enter the product's discount
               </div>
@@ -91,7 +91,7 @@ async function setModalModify(id: string): Promise<void> {
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroupPrepend">★</span>
               </div>
-              <input type="number" class="form-control" id="ratingInput" value="${product.rating}" aria-describedby="inputGroupPrepend" required>
+              <input type="number" class="form-control" id="ratingInput" value="${product.rating}" aria-describedby="inputGroupPrepend" step="0.01" min="0" max="5" required>
               <div class="invalid-feedback">
               Please enter the product's rating
               </div>
