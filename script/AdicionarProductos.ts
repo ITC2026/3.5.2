@@ -227,80 +227,77 @@ function setModalAdd(): void {
   }
 }
 
+function postData(): void {
+  console.log('postData function called');
+  let title: string = (document.getElementById("nameInput") as HTMLInputElement).value;
+  let thumbnail: string = (document.getElementById("thumbnailInput") as HTMLInputElement).value;
+  let description: string = (document.getElementById("descriptionInput") as HTMLTextAreaElement).value;
+  let stock: string = (document.getElementById("stockInput") as HTMLInputElement).value;
+  let brand: string = (document.getElementById("brandInput") as HTMLSelectElement).value;
+  let category: string = (document.getElementById("categoryInput") as HTMLSelectElement).value;
+  let price: string = (document.getElementById("priceInput") as HTMLInputElement).value;
+  let rating: string = (document.getElementById("ratingInput") as HTMLInputElement).value;
+  let images: string = (document.getElementById("imagesInput") as HTMLInputElement).value;
 
+  let data: object = {
+      title,
+      thumbnail,
+      description,
+      stock,
+      brand,
+      category,
+      price,
+      rating,
+      images,
+  };
 
-
-  function postData(): void {
-    console.log('postData function called');
-    let title: string = (document.getElementById("nameInput") as HTMLInputElement).value;
-    let thumbnail: string = (document.getElementById("thumbnailInput") as HTMLInputElement).value;
-    let description: string = (document.getElementById("descriptionInput") as HTMLTextAreaElement).value;
-    let stock: string = (document.getElementById("stockInput") as HTMLInputElement).value;
-    let brand: string = (document.getElementById("brandInput") as HTMLSelectElement).value;
-    let category: string = (document.getElementById("categoryInput") as HTMLSelectElement).value;
-    let price: string = (document.getElementById("priceInput") as HTMLInputElement).value;
-    let rating: string = (document.getElementById("ratingInput") as HTMLInputElement).value;
-    let images: string = (document.getElementById("imagesInput") as HTMLInputElement).value;
-  
-    let data: object = {
-        title,
-        thumbnail,
-        description,
-        stock,
-        brand,
-        category,
-        price,
-        rating,
-        images,
-    };
-  
-    fetch('https://dummyjson.com/products/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+  fetch('https://dummyjson.com/products/add', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Success:', data);
+      //getAllProducts(); //si se fuera a actualizar de verdad
+      showSuccessAlert();
+      // Hide the modal using Bootstrap's modal method
+      let modalBackdrop = document.querySelector('.modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.parentNode?.removeChild(modalBackdrop);
+      }
+      let modal = document.getElementById('staticBackdrop');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+      // Ensure body overflow is restored to scroll
+      document.body.style.overflow = 'auto';
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        //getAllProducts(); //si se fuera a actualizar de verdad
-        showSuccessAlert();
-        // Hide the modal using Bootstrap's modal method
-        let modalBackdrop = document.querySelector('.modal-backdrop');
-        if (modalBackdrop) {
-          modalBackdrop.parentNode?.removeChild(modalBackdrop);
-        }
-        let modal = document.getElementById('staticBackdrop');
-        if (modal) {
-          modal.style.display = 'none';
-        }
-        // Ensure body overflow is restored to scroll
-        document.body.style.overflow = 'auto';
-      })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+  .catch((error) => {
+      console.error('Error:', error);
+  });
 }
 
   
 
-  function showSuccessAlert(): void {
-    const alertElement: HTMLDivElement = document.createElement('div');
-    alertElement.classList.add('alert', 'alert-success');
-    alertElement.setAttribute('role', 'alert');
-    alertElement.textContent = "Operation was successful!";
+function showSuccessAlert(): void {
+  const alertElement: HTMLDivElement = document.createElement('div');
+  alertElement.classList.add('alert', 'alert-success');
+  alertElement.setAttribute('role', 'alert');
+  alertElement.textContent = "Operation was successful!";
 
-    let alertMessage = document.getElementById('alert-messages');
+  let alertMessage = document.getElementById('alert-messages');
 
-    if (!alertMessage) {
-      return 
-    }
-
-    alertMessage.appendChild(alertElement);
-
-    // Quita la alerta
-    setTimeout(() => {
-      alertElement.remove();
-    }, 5000);
+  if (!alertMessage) {
+    return 
   }
+
+  alertMessage.appendChild(alertElement);
+
+  // Quita la alerta
+  setTimeout(() => {
+    alertElement.remove();
+  }, 5000);
+}
