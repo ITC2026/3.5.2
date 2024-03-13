@@ -449,5 +449,4 @@ function displayImages(productTitle, productImgs) {
   }
 }
 
-
 getAllProducts();
