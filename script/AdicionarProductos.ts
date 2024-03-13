@@ -16,7 +16,7 @@ function setModalAdd(): void {
             Looks good!
           </div>
           <div class="invalid-feedback">
-            Please enter the product´s name.
+            Please enter the product's name.
           </div>
         </div>
 
@@ -27,7 +27,7 @@ function setModalAdd(): void {
             Looks good!
           </div>
           <div class="invalid-feedback">
-            Please enter the product´s description.
+            Please enter the product's description.
           </div>
         </div>
 
@@ -38,7 +38,7 @@ function setModalAdd(): void {
               <option selected disabled value="">Choose a category</option>
             </select>
             <div class="invalid-feedback">
-              Please select the product´s category.
+              Please select the product's category.
             </div>
           </div>
 
@@ -48,7 +48,7 @@ function setModalAdd(): void {
               <option selected disabled value="">Choose a brand</option>
             </select>
             <div class="invalid-feedback">
-              Please select the product´s brand.
+              Please select the product's brand.
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@ function setModalAdd(): void {
               </div>
               <input type="number" class="form-control" id="priceInput"  aria-describedby="inputGroupPrepend" required>
               <div class="invalid-feedback">
-                Please enter the product´s price
+                Please enter the product's price
               </div>
             </div>
           </div>
@@ -73,9 +73,9 @@ function setModalAdd(): void {
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroupPrepend">%</span>
               </div>
-              <input type="number" step="0.01" class="form-control" id="discountInput"  aria-describedby="inputGroupPrepend" required>
+              <input type="number" step="0.01" min="0" max="100" class="form-control" id="discountInput"  aria-describedby="inputGroupPrepend" required>
               <div class="invalid-feedback">
-              Please enter the product´s discount
+              Please enter the product's discount
               </div>
             </div>
           </div>
@@ -86,9 +86,9 @@ function setModalAdd(): void {
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroupPrepend">★</span>
               </div>
-              <input type="number" step="0.01" class="form-control" id="ratingInput"  aria-describedby="inputGroupPrepend" required>
+              <input type="number" step="0.01" min="0" max="5" class="form-control" id="ratingInput"  aria-describedby="inputGroupPrepend" required>
               <div class="invalid-feedback">
-              Please enter the product´s rating
+              Please enter the product's rating
               </div>
             </div>
           </div>
@@ -100,21 +100,21 @@ function setModalAdd(): void {
             <span class="input-group-text" id="inputGroupPrepend">#</span>
             <input type="number" class="form-control" id="stockInput" aria-describedby="inputGroupPrepend" required>
             <div class="invalid-feedback">
-              Please choose a username.
+            Please enter the product's stock
             </div>
           </div>
         </div>
 
         <div class="mb-3">
           <label for="thumbnailInput">Thumbnail</label>
-          <input id="thumbnailInput" type="file" class="form-control" aria-label="file example">
-          <div class="invalid-feedback">Example invalid form file feedback</div>
+          <input id="thumbnailInput" type="file" class="form-control" aria-label="file example" required>
+          <div class="invalid-feedback">Invalid form file</div>
         </div>
 
         <div class="mb-3">
           <label for="imagesInput">Images</label>
-          <input id="imagesInput" type="file" class="form-control" aria-label="file example" multiple>
-          <div class="invalid-feedback">Example invalid form file feedback</div>
+          <input id="imagesInput" type="file" class="form-control" aria-label="file example" multiple required>
+          <div class="invalid-feedback">Invalid form file</div>
         </div>
 
         <button id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
