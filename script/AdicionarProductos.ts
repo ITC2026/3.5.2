@@ -122,6 +122,14 @@ function setModalAdd(): void {
     </div>
     `;
 
+  let modalFooter: HTMLElement | null = document.getElementById("modal-footer");
+
+  if (!modalFooter) {
+    return;
+  }
+
+  modalFooter.innerHTML = ``; // Clear the footer
+
   // Populate category select
   fetch("https://dummyjson.com/products/categories")
     .then((response) => response.json())

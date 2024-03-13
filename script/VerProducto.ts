@@ -40,5 +40,7 @@ function setModalInfo(id: number) {
             </style>
           </div>
           `;
+
+      modalFooter.innerHTML = ``; // Clear the footer
     });
 }
