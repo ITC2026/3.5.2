@@ -405,6 +405,9 @@ function displayImages(productTitle, productImgs) {
       carouselInner.appendChild(carouselItem);
     });
 
+    let modalFooter = document.getElementById("modal-footer");
+    modalFooter.innerHTML = ``;
+
     carousel.appendChild(carouselInner);
 
     // Create carousel controls

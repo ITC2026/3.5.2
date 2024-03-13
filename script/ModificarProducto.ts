@@ -127,6 +127,9 @@ async function setModalModify(id: string): Promise<void> {
     </div>
      
       `;
+
+      let modalFooter = document.getElementById("modal-footer")!;
+      modalFooter.innerHTML = ``; // Clear the footer
   
       // Populate category select
       const categoriesResponse = await fetch('https://dummyjson.com/products/categories');
