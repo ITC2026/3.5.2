@@ -235,7 +235,7 @@ function setModalAdd(): void {
   }
 }
 
-function postData(): void {
+function postData(modify?: boolean): void {
   console.log('postData function called');
   let title: string = (document.getElementById("nameInput") as HTMLInputElement).value;
   let thumbnail: string = (document.getElementById("thumbnailInput") as HTMLInputElement).value;
@@ -259,8 +259,10 @@ function postData(): void {
       images,
   };
 
+  let api_method = modify ? 'PATCH' : 'POST';
+
   fetch('https://dummyjson.com/products/add', {
-      method: 'POST',
+      method: api_method,
       headers: {
           'Content-Type': 'application/json',
       },

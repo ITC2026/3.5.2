@@ -191,7 +191,7 @@ async function setModalModify(id: string): Promise<void> {
         }
   
         // Posts answers
-        postData();
+        postData(true);
       }, false);
     } catch (error) {
       console.error('Error:', error);

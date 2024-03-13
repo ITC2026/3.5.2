@@ -112,7 +112,7 @@ function setModalModify(id) {
                             return;
                         }
                         // Posts answers
-                        postData();
+                        postData(true);
                     }, false);
                     return [3 /*break*/, 8];
                 case 7:
