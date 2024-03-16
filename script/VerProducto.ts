@@ -42,5 +42,6 @@ function setModalInfo(id: number) {
           `;
 
       modalFooter.innerHTML = ``; // Clear the footer
-    });
+    })
+    .catch((err) => console.log(`Error: ${err}`));
 }
